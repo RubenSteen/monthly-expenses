@@ -2,8 +2,8 @@
 
 namespace App\Actions\Fortify;
 
-use Laravel\Fortify\Rules\Password;
 use Illuminate\Support\Facades\App;
+use Laravel\Fortify\Rules\Password;
 
 trait PasswordValidationRules
 {
@@ -17,6 +17,7 @@ trait PasswordValidationRules
         if (! App::environment('local')) {
             return (new Password)->length(10)->requireUppercase()->requireNumeric()->requireSpecialCharacter();
         }
+
         return ['required', 'string', new Password, 'confirmed'];
     }
 }
