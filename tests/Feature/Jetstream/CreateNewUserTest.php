@@ -4,8 +4,8 @@ it('can create a new user', function () {
     $response = $this->post('/register', [
         'name' => 'John Doe',
         'email' => 'johndoe@laravel.com',
-        'password' => 'password',
-        'password_confirmation' => 'password',
+        'password' => 'Password123!',
+        'password_confirmation' => 'Password123!',
     ])->assertSessionHasNoErrors();
 
     $this->assertDatabaseHas('users', [
