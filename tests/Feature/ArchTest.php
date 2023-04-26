@@ -2,7 +2,7 @@
 
 // Makes sure the application doesn't use debugging functions
 it('does not use debugging functions')
-    ->expect(['dd', 'dump', 'ray'])
+    ->expect(['dd', 'dump', 'ray', 'var_dump'])
     ->not->toBeUsed();
 
 // Makes sure only the Redirect facade is being used in the Controllers
