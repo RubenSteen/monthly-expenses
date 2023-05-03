@@ -2,43 +2,6 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Transactions from '@/Components/Transactions.vue';
 
-import {
-  WalletIcon,
-  HomeModernIcon,
-  BanknotesIcon,
-  CreditCardIcon,
-  CurrencyEuroIcon,
-  RectangleStackIcon,
-} from '@heroicons/vue/24/outline'
-
-const stats = [
-  { id: 1, name: 'Overgehouden budget', stat: '€415,85', },
-  { id: 2, name: 'Dagen te gaan', stat: '14', },
-]
-
-const monthStats = [
-  {
-    name: 'Uitgaven',
-    amount: '€249.27',
-    icon: BanknotesIcon,
-  },
-  {
-    name: 'Gezamelijke Uitgaven',
-    amount: '€1,334.37',
-    icon: CreditCardIcon,
-  },
-  {
-    name: 'Sparen',
-    amount: '€130.00',
-    icon: WalletIcon,
-  },
-  {
-    name: 'Gezamelijk Sparen',
-    amount: '€375.00',
-    icon: HomeModernIcon,
-  },
-]
-
 const transactions = [
   {
     id: 1,

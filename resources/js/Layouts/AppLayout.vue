@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue'
-import { Head } from '@inertiajs/vue3';
+import { ref, computed } from 'vue'
+import { Head, Link } from '@inertiajs/vue3';
 import {
   Dialog,
   DialogPanel,
@@ -10,25 +10,16 @@ import {
   MenuItems,
   TransitionChild,
   TransitionRoot,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
 } from '@headlessui/vue'
 import {
   Bars3Icon,
   XMarkIcon,
-  CalendarIcon,
-  ChartPieIcon,
   Cog6ToothIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
   HomeIcon,
-  UsersIcon,
   WalletIcon,
   HomeModernIcon,
   BanknotesIcon,
   CreditCardIcon,
-  CurrencyEuroIcon,
   RectangleStackIcon,
 } from '@heroicons/vue/24/outline'
 
@@ -37,69 +28,21 @@ defineProps({
 });
 
 const navigation = [
-  { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-  { name: 'Potjes', href: '#', icon: RectangleStackIcon, current: false },
+  { name: 'Dashboard', href: route('dashboard'), icon: HomeIcon, current: route().current('dashboard') },
+  { name: 'Potjes', href: route('piggy-bank.index'), icon: RectangleStackIcon, current: route().current('piggy-bank.index') },
 ]
 
 const secondNavigation = [
-  { name: 'Uitgaven', href: '#', icon: BanknotesIcon, current: false },
-  { name: 'Gezamelijke Uitgaven', href: '#', icon: CreditCardIcon, current: false },
-  { name: 'Sparen', href: '#', icon: WalletIcon, current: false },
-  { name: 'Gezamelijk Sparen', href: '#', icon: HomeModernIcon, current: false },
+  { name: 'Uitgaven', href: route('expenses.index'), icon: BanknotesIcon, current: route().current('expenses.index') },
+  { name: 'Gezamelijke Uitgaven', href: route('collective-expenses.index'), icon: CreditCardIcon, current: route().current('collective-expenses.index') },
+  { name: 'Sparen', href: route('savings.index'), icon: WalletIcon, current: route().current('savings.index') },
+  { name: 'Gezamelijk Sparen', href: route('collective-savings.index'), icon: HomeModernIcon, current: route().current('collective-savings.index') },
 ]
 
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
   { name: 'Settings', href: '#' },
   { name: 'Sign out', href: '#' },
-]
-
-const stats = [
-  { id: 1, name: 'Overgehouden budget', stat: '€415,85', },
-  { id: 2, name: 'Dagen te gaan', stat: '14', },
-]
-
-const monthStats = [
-  {
-    name: 'Uitgaven',
-    amount: '€249.27',
-    icon: BanknotesIcon,
-  },
-  {
-    name: 'Gezamelijke Uitgaven',
-    amount: '€1,334.37',
-    icon: CreditCardIcon,
-  },
-  {
-    name: 'Sparen',
-    amount: '€130.00',
-    icon: WalletIcon,
-  },
-  {
-    name: 'Gezamelijk Sparen',
-    amount: '€375.00',
-    icon: HomeModernIcon,
-  },
-  // More people...
-]
-
-const transactions = [
-  {
-    id: 1,
-    name: 'Boodschappen',
-    amount: '€200.00',
-    period: 'Maandelijks',
-    from: 'Mij',
-    to: 'Boodchappen',
-  },
-  {
-    id: 2,
-    name: 'Internet en Televisie',
-    amount: '€25,57',
-    period: 'Maandelijks',
-    from: 'Mij',
-    to: 'Gezamelijke rekening',
-  },
 ]
 
 const sidebarOpen = ref(false)
@@ -111,7 +54,6 @@ const logout = () => {
 
 <template>
   <Head :title="title" />
-
   <nav>
     <div class="mx-auto px-2 sm:px-6 lg:px-8">
       <div class="relative flex h-16 justify-between">
@@ -151,14 +93,16 @@ const logout = () => {
               <MenuItems
                 class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <MenuItem v-slot="{ active }">
-                <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Your
-                  Profile</a>
+                <Link href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Your
+                Profile</Link>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Settings</a>
+                <Link href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Settings
+                </Link>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
-                <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Sign out</a>
+                <Link href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Sign out
+                </Link>
                 </MenuItem>
               </MenuItems>
             </transition>
@@ -202,36 +146,36 @@ const logout = () => {
                     <li>
                       <ul role="list" class="-mx-2 space-y-1">
                         <li v-for="item in navigation" :key="item.name">
-                          <a :href="item.href"
+                          <Link :href="item.href"
                             :class="[item.current ? 'bg-gray-50 text-indigo-600' : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
-                            <component :is="item.icon"
-                              :class="[item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600', 'h-6 w-6 shrink-0']"
-                              aria-hidden="true" />
-                            {{ item.name }}
-                          </a>
+                          <component :is="item.icon"
+                            :class="[item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600', 'h-6 w-6 shrink-0']"
+                            aria-hidden="true" />
+                          {{ item.name }}
+                          </Link>
                         </li>
                       </ul>
                     </li>
                     <li>
                       <ul role="list" class="-mx-2 space-y-1">
                         <li v-for="item in secondNavigation" :key="item.name">
-                          <a :href="item.href"
+                          <Link :href="item.href"
                             :class="[item.current ? 'bg-gray-50 text-indigo-600' : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
-                            <component :is="item.icon"
-                              :class="[item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600', 'h-6 w-6 shrink-0']"
-                              aria-hidden="true" />
-                            {{ item.name }}
-                          </a>
+                          <component :is="item.icon"
+                            :class="[item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600', 'h-6 w-6 shrink-0']"
+                            aria-hidden="true" />
+                          {{ item.name }}
+                          </Link>
                         </li>
                       </ul>
                     </li>
                     <li class="mt-auto">
-                      <a href="#"
+                      <Link href="#"
                         class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600">
-                        <Cog6ToothIcon class="h-6 w-6 shrink-0 text-gray-400 group-hover:text-indigo-600"
-                          aria-hidden="true" />
-                        Settings
-                      </a>
+                      <Cog6ToothIcon class="h-6 w-6 shrink-0 text-gray-400 group-hover:text-indigo-600"
+                        aria-hidden="true" />
+                      Settings
+                      </Link>
                     </li>
                   </ul>
                 </nav>
@@ -254,35 +198,35 @@ const logout = () => {
             <li>
               <ul role="list" class="-mx-2 space-y-1">
                 <li v-for="item in navigation" :key="item.name">
-                  <a :href="item.href"
+                  <Link :href="item.href"
                     :class="[item.current ? 'bg-gray-50 text-indigo-600' : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
-                    <component :is="item.icon"
-                      :class="[item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600', 'h-6 w-6 shrink-0']"
-                      aria-hidden="true" />
-                    {{ item.name }}
-                  </a>
+                  <component :is="item.icon"
+                    :class="[item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600', 'h-6 w-6 shrink-0']"
+                    aria-hidden="true" />
+                  {{ item.name }}
+                  </Link>
                 </li>
               </ul>
             </li>
             <li>
               <ul role="list" class="-mx-2 space-y-1">
                 <li v-for="item in secondNavigation" :key="item.name">
-                  <a :href="item.href"
+                  <Link :href="item.href"
                     :class="[item.current ? 'bg-gray-50 text-indigo-600' : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
-                    <component :is="item.icon"
-                      :class="[item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600', 'h-6 w-6 shrink-0']"
-                      aria-hidden="true" />
-                    {{ item.name }}
-                  </a>
+                  <component :is="item.icon"
+                    :class="[item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600', 'h-6 w-6 shrink-0']"
+                    aria-hidden="true" />
+                  {{ item.name }}
+                  </Link>
                 </li>
               </ul>
             </li>
             <li class="mt-auto">
-              <a href="#"
+              <Link href="#"
                 class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600">
-                <Cog6ToothIcon class="h-6 w-6 shrink-0 text-gray-400 group-hover:text-indigo-600" aria-hidden="true" />
-                Settings
-              </a>
+              <Cog6ToothIcon class="h-6 w-6 shrink-0 text-gray-400 group-hover:text-indigo-600" aria-hidden="true" />
+              Settings
+              </Link>
             </li>
           </ul>
         </nav>

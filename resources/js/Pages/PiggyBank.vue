@@ -4,7 +4,7 @@ import Transactions from '@/Components/Transactions.vue';
 </script>
 
 <template>
-    <AppLayout title="Gezamelijke Uitgaven">
+    <AppLayout title="Potjes">
         <div class="px-4 sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow mt-4">
                 <div class="px-4 py-5 sm:p-6">
