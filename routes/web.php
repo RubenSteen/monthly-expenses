@@ -29,7 +29,29 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::get('/piggy-bank', function () {
+        return Inertia::render('PiggyBank');
+    })->name('piggy-bank.index');
+
+    Route::get('/expenses', function () {
+        return Inertia::render('Expenses');
+    })->name('expenses.index');
+
+    Route::get('/collective-expenses', function () {
+        return Inertia::render('CollectiveExpenses');
+    })->name('collective-expenses.index');
+
+    Route::get('/savings', function () {
+        return Inertia::render('Savings');
+    })->name('savings.index');
+
+    Route::get('/collective-savings', function () {
+        return Inertia::render('CollectiveSavings');
+    })->name('collective-savings.index');
+
 });
