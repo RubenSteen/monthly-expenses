@@ -5,19 +5,19 @@ import Transactions from '@/Components/Transactions.vue';
 const transactions = [
   {
     id: 1,
-    name: 'Boodschappen',
-    amount: '€200.00',
+    name: 'Zorgverzekering',
+    amount: '€130.00',
     period: 'Maandelijks',
     from: 'Mij',
-    to: 'Boodchappen',
+    to: 'Mij',
   },
   {
     id: 2,
-    name: 'Internet en Televisie',
-    amount: '€25,57',
+    name: 'Creditcard',
+    amount: '€3.40',
     period: 'Maandelijks',
     from: 'Mij',
-    to: 'Gezamelijke rekening',
+    to: 'Mij',
   },
 ]
 </script>

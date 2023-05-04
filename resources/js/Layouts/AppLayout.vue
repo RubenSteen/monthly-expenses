@@ -21,6 +21,7 @@ import {
   BanknotesIcon,
   CreditCardIcon,
   RectangleStackIcon,
+  CurrencyEuroIcon,
 } from '@heroicons/vue/24/outline'
 
 defineProps({
@@ -33,6 +34,7 @@ const navigation = [
 ]
 
 const secondNavigation = [
+  { name: 'Inkomen', href: route('income.index'), icon: CurrencyEuroIcon, current: route().current('income.index') },
   { name: 'Uitgaven', href: route('expenses.index'), icon: BanknotesIcon, current: route().current('expenses.index') },
   { name: 'Gezamelijke Uitgaven', href: route('collective-expenses.index'), icon: CreditCardIcon, current: route().current('collective-expenses.index') },
   { name: 'Sparen', href: route('savings.index'), icon: WalletIcon, current: route().current('savings.index') },

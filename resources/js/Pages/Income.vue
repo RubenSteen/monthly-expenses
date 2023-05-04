@@ -5,33 +5,25 @@ import Transactions from '@/Components/Transactions.vue';
 const transactions = [
     {
         id: 1,
-        name: 'Auto',
-        amount: '€100.00',
+        name: 'Salaris Werk',
+        amount: '€2215,14',
         period: 'Maandelijks',
-        from: 'Mij',
-        to: 'Auto',
+        from: 'Extern',
+        to: 'Mij',
     },
     {
         id: 2,
-        name: 'Koophuis',
-        amount: '€150.00',
+        name: 'Huurtoeslag',
+        amount: '€196,57',
         period: 'Maandelijks',
-        from: 'Mij',
-        to: 'Koophuis',
-    },
-    {
-        id: 2,
-        name: 'Bezine',
-        amount: '€50.00',
-        period: 'Maandelijks',
-        from: 'Mij',
-        to: 'Boot',
+        from: 'Extern',
+        to: 'Mij',
     },
 ]
 </script>
 
 <template>
-    <AppLayout title="Gezamelijk Sparen">
+    <AppLayout title="Inkomen">
         <div class="px-4 sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow mt-4">
                 <div class="px-4 py-5 sm:p-6">

@@ -34,6 +34,10 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
+    Route::get('/income', function () {
+        return Inertia::render('Income');
+    })->name('income.index');
+
     Route::get('/piggy-bank', function () {
         return Inertia::render('PiggyBank');
     })->name('piggy-bank.index');
