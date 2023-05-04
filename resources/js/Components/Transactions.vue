@@ -1,7 +1,5 @@
 <script setup>
-import {
-    ClipboardDocumentIcon,
-} from '@heroicons/vue/24/outline'
+import { ClipboardDocumentIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
     data: {
