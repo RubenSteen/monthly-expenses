@@ -22,7 +22,7 @@ const pressedEdit = (id) => {
 
 <template>
     <div>
-        <div class="sm:flex sm:items-center">
+        <div class="sm:flex sm:items-center mb-8">
             <div class="sm:flex-auto">
                 <h1 class="text-base font-semibold leading-6 text-gray-900">
                     <slot name="title" />
@@ -37,12 +37,12 @@ const pressedEdit = (id) => {
         </div>
 
         <button v-if="data.length < 1" type="button"
-            class="mt-8 relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
             <component :is="ClipboardDocumentIcon" class="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" />
             <span class="mt-2 block text-sm font-semibold text-gray-900">Geen regels gevonden</span>
         </button>
 
-        <div v-else class="mt-8 flow-root">
+        <div v-else class="flow-root">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                     <table class="min-w-full divide-y divide-gray-300">

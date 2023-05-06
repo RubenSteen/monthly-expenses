@@ -58,10 +58,10 @@ const monthStats = [
                 <dd class="flex items-baseline">
                   <p class="text-2xl font-semibold text-gray-900">{{ item.stat }}</p>
                   <div class="absolute inset-x-0 bottom-0 px-4 py-3 sm:px-6">
-                    <div class="text-sm">
+                    <!-- <div class="text-sm">
                       <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">View all<span class="sr-only">
                           {{ item.name }} stats</span></a>
-                    </div>
+                    </div> -->
                   </div>
                 </dd>
               </div>

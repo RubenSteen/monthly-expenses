@@ -94,17 +94,10 @@ const logout = () => {
               leave-to-class="transform opacity-0 scale-95">
               <MenuItems
                 class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <MenuItem v-slot="{ active }">
-                <Link href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Your
-                Profile</Link>
-                </MenuItem>
-                <MenuItem v-slot="{ active }">
-                <Link href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Settings
-                </Link>
-                </MenuItem>
-                <MenuItem v-slot="{ active }">
-                <Link href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Sign out
-                </Link>
+                <MenuItem v-slot="{ active }" v-for="link in userNavigation">
+                <Link :href="link.href" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
+                {{
+                  link.name }} </Link>
                 </MenuItem>
               </MenuItems>
             </transition>
@@ -171,14 +164,14 @@ const logout = () => {
                         </li>
                       </ul>
                     </li>
-                    <li class="mt-auto">
+                    <!-- <li class="mt-auto">
                       <Link href="#"
                         class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600">
                       <Cog6ToothIcon class="h-6 w-6 shrink-0 text-gray-400 group-hover:text-indigo-600"
                         aria-hidden="true" />
                       Settings
                       </Link>
-                    </li>
+                    </li> -->
                   </ul>
                 </nav>
               </div>
@@ -223,13 +216,13 @@ const logout = () => {
                 </li>
               </ul>
             </li>
-            <li class="mt-auto">
+            <!-- <li class="mt-auto">
               <Link href="#"
                 class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600">
               <Cog6ToothIcon class="h-6 w-6 shrink-0 text-gray-400 group-hover:text-indigo-600" aria-hidden="true" />
               Settings
               </Link>
-            </li>
+            </li> -->
           </ul>
         </nav>
       </div>

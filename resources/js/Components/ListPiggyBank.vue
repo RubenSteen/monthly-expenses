@@ -2,6 +2,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { EllipsisHorizontalIcon } from '@heroicons/vue/20/solid'
 import { ClipboardDocumentIcon } from '@heroicons/vue/24/outline'
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 const props = defineProps({
     clients: {
@@ -10,15 +11,34 @@ const props = defineProps({
     },
 });
 
-const statuses = {
-    Paid: 'text-green-700 bg-green-50 ring-green-600/20',
-    Withdraw: 'text-gray-600 bg-gray-50 ring-gray-500/10',
-    Overdue: 'text-red-700 bg-red-50 ring-red-600/10',
-}
+const emit = defineEmits(['pressedButton', 'pressedEdit']);
+
+const pressedButton = () => {
+    emit('pressedButton');
+};
+
+const pressedEdit = (id) => {
+    emit('pressedEdit', id);
+};
+
 </script>
 
 <template>
     <div>
+        <div class="sm:flex sm:items-center mb-8">
+            <div class="sm:flex-auto">
+                <h1 class="text-base font-semibold leading-6 text-gray-900">
+                    <slot name="title" />
+                </h1>
+                <p class="mt-2 text-sm text-gray-700">
+                    <slot name="content" />
+                </p>
+            </div>
+            <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+                <PrimaryButton @click="pressedButton">Nieuw</PrimaryButton>
+            </div>
+        </div>
+
         <button v-if="clients.length < 1" type="button"
             class="mt-8 relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
             <component :is="ClipboardDocumentIcon" class="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" />
@@ -47,7 +67,7 @@ const statuses = {
                                         class="sr-only">, {{ client.name }}</span></a>
                                 </MenuItem>
                                 <MenuItem v-slot="{ active }">
-                                <a href="#"
+                                <a @click="pressedEdit(client.id)"
                                     :class="[active ? 'bg-gray-50' : '', 'block px-3 py-1 text-sm leading-6 text-gray-900']">Edit<span
                                         class="sr-only">, {{ client.name }}</span></a>
                                 </MenuItem>
@@ -60,6 +80,12 @@ const statuses = {
                         <dt class="text-gray-500">Bedrag</dt>
                         <dd class="flex items-start gap-x-2">
                             <div class="font-medium text-gray-900">{{ client.amount }}</div>
+                        </dd>
+                    </div>
+                    <div class="flex justify-between gap-x-4 py-3">
+                        <dt class="text-gray-500">Transacties</dt>
+                        <dd class="flex items-start gap-x-2">
+                            <div class="font-medium text-gray-900">{{ client.transactions_count }}</div>
                         </dd>
                     </div>
                 </dl>
