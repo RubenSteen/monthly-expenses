@@ -99,18 +99,11 @@ const piggyBanks = [
                                 <div class="sm:col-span-4">
                                     <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Naam</label>
                                     <div class="relative mt-2 rounded-md shadow-sm">
-                                        <!-- <input type="email" name="name" id="name"
-                                            class="block w-full rounded-md border-0 py-1.5 pr-10 text-red-900 ring-1 ring-inset ring-red-300 placeholder:text-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500 sm:text-sm sm:leading-6"
-                                            placeholder="you@example.com" value="adamwathan" aria-invalid="true"
-                                            aria-describedby="email-error" />
-                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                                            <ExclamationCircleIcon class="h-5 w-5 text-red-500" aria-hidden="true" />
-                                        </div> -->
                                         <div class="mt-2">
-                                            <input type="email" name="email" id="email"
+                                            <input type="text" name="name" id="name"
                                                 class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
                                                 :class="`${errors.name ? 'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500' : 'ring-gray-300 placeholder:text-gray-400 focus:ring-indigo-600 text-gray-900'}`"
-                                                placeholder="you@example.com" />
+                                                placeholder="Boodschappen" />
                                         </div>
                                     </div>
                                     <p class="mt-2 text-sm text-red-600" id="name-error" v-if="errors.name">{{
@@ -128,7 +121,7 @@ const piggyBanks = [
                                         <input type="text" name="amount" id="amount"
                                             class="block w-full rounded-md border-0 py-1.5 pl-7 pr-12 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
                                             :class="`${errors.name ? 'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500' : 'ring-gray-300 placeholder:text-gray-400 focus:ring-indigo-600 text-gray-900'}`"
-                                            placeholder="0.00" aria-describedby="amount-currency" />
+                                            placeholder="0,00" aria-describedby="amount-currency" />
                                         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                                             <span class="text-gray-500 sm:text-sm" id="amount-currency">EUR</span>
                                         </div>
