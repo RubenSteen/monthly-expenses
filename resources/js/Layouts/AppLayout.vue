@@ -22,6 +22,7 @@ import {
   CreditCardIcon,
   RectangleStackIcon,
   CurrencyEuroIcon,
+  ArrowLeftOnRectangleIcon,
 } from '@heroicons/vue/24/outline'
 
 defineProps({
@@ -42,16 +43,12 @@ const secondNavigation = [
 ]
 
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Your Profile', href: route('profile.show'), current: route().current('profile.show') },
+  { name: 'Settings', href: '#', current: route().current('dashboard') },
 ]
 
 const sidebarOpen = ref(false)
 
-const logout = () => {
-  router.post(route('logout'));
-};
 </script>
 
 <template>
@@ -94,10 +91,16 @@ const logout = () => {
               leave-to-class="transform opacity-0 scale-95">
               <MenuItems
                 class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <MenuItem v-slot="{ active }" v-for="link in userNavigation">
+                <MenuItem v-slot="{ active }" v-for="link in userNavigation" :key="link.href">
                 <Link :href="link.href" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
                 {{
                   link.name }} </Link>
+                </MenuItem>
+                <MenuItem v-slot="{ active }">
+                <Link :href="route('logout')" method="post" as="button" type="button"
+                  :class="[active ? 'bg-gray-100' : '', 'block w-full text-left px-4 py-2 text-sm text-gray-700']">
+                Sign out
+                </Link>
                 </MenuItem>
               </MenuItems>
             </transition>
@@ -164,14 +167,14 @@ const logout = () => {
                         </li>
                       </ul>
                     </li>
-                    <!-- <li class="mt-auto">
-                      <Link href="#"
-                        class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600">
-                      <Cog6ToothIcon class="h-6 w-6 shrink-0 text-gray-400 group-hover:text-indigo-600"
+                    <li class="mt-auto">
+                      <Link :href="route('logout')" method="post" as="button" type="button"
+                        class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600 w-full">
+                      <ArrowLeftOnRectangleIcon class="h-6 w-6 shrink-0 text-gray-400 group-hover:text-indigo-600"
                         aria-hidden="true" />
-                      Settings
+                      Sign out
                       </Link>
-                    </li> -->
+                    </li>
                   </ul>
                 </nav>
               </div>
