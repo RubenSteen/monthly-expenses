@@ -54,12 +54,12 @@ const pressedEdit = (id) => {
                                 </th>
                                 <th scope="col"
                                     class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                    Kosten gemiddeld
+                                    Kosten
                                 </th>
-                                <th scope="col"
+                                <!-- <th scope="col"
                                     class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Herhaling
-                                </th>
+                                </th> -->
                                 <th scope="col"
                                     class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Van
@@ -69,7 +69,7 @@ const pressedEdit = (id) => {
                                     Naar
                                 </th>
                                 <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-0">
-                                    <span class="sr-only">Edit</span>
+                                    <span class="sr-only">Bewerk</span>
                                 </th>
                             </tr>
                         </thead>
@@ -81,9 +81,9 @@ const pressedEdit = (id) => {
                                 <td class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
                                     {{ transaction.amount }}
                                 </td>
-                                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
+                                <!-- <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
                                     {{ transaction.period }}
-                                </td>
+                                </td> -->
                                 <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                                     {{ transaction.from }}
                                 </td>
@@ -93,7 +93,7 @@ const pressedEdit = (id) => {
                                 <td
                                     class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                                     <button @click="pressedEdit(transaction.id)"
-                                        class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, {{
+                                        class="text-indigo-600 hover:text-indigo-900">Bewerk<span class="sr-only">, {{
                                             transaction.id }}</span></button>
                                 </td>
                             </tr>

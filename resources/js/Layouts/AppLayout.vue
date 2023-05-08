@@ -30,7 +30,7 @@ defineProps({
 });
 
 const navigation = [
-  { name: 'Dashboard', href: route('dashboard'), icon: HomeIcon, current: route().current('dashboard') },
+  { name: 'Overzicht', href: route('dashboard'), icon: HomeIcon, current: route().current('dashboard') },
   { name: 'Potjes', href: route('piggy-bank.index'), icon: RectangleStackIcon, current: route().current('piggy-bank.index') },
 ]
 
@@ -43,8 +43,7 @@ const secondNavigation = [
 ]
 
 const userNavigation = [
-  { name: 'Your Profile', href: route('profile.show'), current: route().current('profile.show') },
-  { name: 'Settings', href: '#', current: route().current('dashboard') },
+  { name: 'Profiel', href: route('profile.show'), current: route().current('profile.show') },
 ]
 
 const sidebarOpen = ref(false)
@@ -99,7 +98,7 @@ const sidebarOpen = ref(false)
                 <MenuItem v-slot="{ active }">
                 <Link :href="route('logout')" method="post" as="button" type="button"
                   :class="[active ? 'bg-gray-100' : '', 'block w-full text-left px-4 py-2 text-sm text-gray-700']">
-                Sign out
+                Uitloggen
                 </Link>
                 </MenuItem>
               </MenuItems>
@@ -172,7 +171,7 @@ const sidebarOpen = ref(false)
                         class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600 w-full">
                       <ArrowLeftOnRectangleIcon class="h-6 w-6 shrink-0 text-gray-400 group-hover:text-indigo-600"
                         aria-hidden="true" />
-                      Sign out
+                      Uitloggen
                       </Link>
                     </li>
                   </ul>

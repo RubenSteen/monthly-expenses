@@ -25,7 +25,7 @@ defineProps({
     },
 });
 
-const selectPeriodValue = ref(1);
+// const selectPeriodValue = ref(1);
 
 const selectFromValue = ref(1);
 
@@ -35,16 +35,16 @@ const close = () => {
     emit('close');
 };
 
-const periods = [
-    {
-        id: 1,
-        name: 'Maandelijks',
-    },
-    {
-        id: 2,
-        name: 'Jaarlijks',
-    },
-]
+// const periods = [
+//     {
+//         id: 1,
+//         name: 'Maandelijks',
+//     },
+//     {
+//         id: 2,
+//         name: 'Jaarlijks',
+//     },
+// ]
 
 const piggyBanks = [
     {
@@ -81,17 +81,25 @@ const piggyBanks = [
 <template>
     <Modal :show="show" :max-width="maxWidth" :closeable="closeable" @close="close">
         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <div class="sm:flex sm:items-start">
-                <div
-                    class="mx-auto shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">
-                    <component :is="ClipboardDocumentListIcon" class="h-6 w-6 text-indigo-600" aria-hidden="true" />
-                </div>
 
-                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3 class="text-lg font-medium text-gray-900">
+            <div class="border-b border-gray-200 pb-5 sm:flex sm:items-center sm:justify-between">
+                <div class="flex items-center">
+                    <div
+                        class="mx-auto shrink-0 items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10 hidden sm:inline-flex">
+                        <component :is="ClipboardDocumentListIcon" class="h-6 w-6 text-indigo-600" aria-hidden="true" />
+                    </div>
+                    <h3 class="text-base font-semibold leading-6 text-gray-90 pl-2">
                         <slot name="title" />
                     </h3>
+                </div>
+                <div class="mt-3 sm:ml-4 sm:mt-0">
+                    <button type="button"
+                        class="inline-flex items-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Delete</button>
+                </div>
+            </div>
 
+            <div class="sm:flex sm:items-start">
+                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                     <div class="mt-4 text-sm text-gray-600">
                         <form>
                             <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-6">
@@ -131,7 +139,7 @@ const piggyBanks = [
                                     }}</p>
                                 </div>
 
-                                <div class="sm:col-span-4">
+                                <!-- <div class="sm:col-span-4">
                                     <div class="relative mt-2 rounded-md shadow-sm">
                                         <label for="period"
                                             class="block text-sm font-medium leading-6 text-gray-900">Herhaling</label>
@@ -147,7 +155,7 @@ const piggyBanks = [
                                     <p class="mt-2 text-sm text-red-600" id="period-error" v-if="errors.period">{{
                                         errors.period
                                     }}</p>
-                                </div>
+                                </div> -->
 
                                 <div class="sm:col-span-4">
                                     <div class="relative mt-2 rounded-md shadow-sm">

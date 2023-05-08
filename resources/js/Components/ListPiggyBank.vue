@@ -63,12 +63,12 @@ const pressedEdit = (id) => {
                                 class="absolute right-0 z-10 mt-0.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                                 <MenuItem v-slot="{ active }">
                                 <a href="#"
-                                    :class="[active ? 'bg-gray-50' : '', 'block px-3 py-1 text-sm leading-6 text-gray-900']">View<span
+                                    :class="[active ? 'bg-gray-50' : '', 'block px-3 py-1 text-sm leading-6 text-gray-900']">Inzicht<span
                                         class="sr-only">, {{ client.name }}</span></a>
                                 </MenuItem>
                                 <MenuItem v-slot="{ active }">
                                 <a @click="pressedEdit(client.id)"
-                                    :class="[active ? 'bg-gray-50' : '', 'block px-3 py-1 text-sm leading-6 text-gray-900']">Edit<span
+                                    :class="[active ? 'bg-gray-50' : '', 'block px-3 py-1 text-sm leading-6 text-gray-900']">Bewerk<span
                                         class="sr-only">, {{ client.name }}</span></a>
                                 </MenuItem>
                             </MenuItems>
