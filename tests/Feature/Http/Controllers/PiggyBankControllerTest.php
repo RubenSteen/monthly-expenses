@@ -85,25 +85,27 @@ it('cannot edit a piggy bank that isnt theirs', function () {
 |--------------------------------------------------------------------------
 */
 
-test('name is required to create a piggy bank', function () {
-    $data = PiggyBank::factory()->make(['name' => null])->toArray();
+test('validation tests while creating', function (string $field, mixed $value, string $rule) {
+    $data = PiggyBank::factory()->make([$field => $value])->toArray();
 
     actingAs($this->user)
         ->post(route('piggy-bank.store', $data))
         ->assertSessionHasErrors([
-            'name' => 'The name field is required.',
+            $field => $rule,
         ]);
-});
+})->with([
+    'name cannot be null' => ['name', null, 'The name field is required.'],
+]);
 
-test('description can be nullable while creating a piggy bank', function () {
-    $data = PiggyBank::factory()->make(['description' => null])->toArray();
+test('validation tests while creating that can be null', function (string $field) {
+    $data = PiggyBank::factory()->make([$field => null])->toArray();
 
     actingAs($this->user)
         ->post(route('piggy-bank.store', $data))
-        ->assertSessionHasNoErrors([
-            'description',
-        ]);
-});
+        ->assertSessionHasNoErrors([$field]);
+})->with([
+    'description' => ['description'],
+]);
 
 /*
 |--------------------------------------------------------------------------

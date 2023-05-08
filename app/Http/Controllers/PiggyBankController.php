@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePiggyBankRequest;
 use App\Models\PiggyBank;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -22,14 +22,9 @@ class PiggyBankController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StorePiggyBankRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => 'required',
-            'description' => 'nullable',
-        ]);
-
-        Auth::user()->piggyBanks()->create($validated);
+        Auth::user()->piggyBanks()->create($request->all());
 
         return Redirect::route('piggy-bank.index')->with(['success' => 'Potje aangemaakt']);
     }
@@ -37,7 +32,7 @@ class PiggyBankController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PiggyBank $piggyBank): RedirectResponse
+    public function update(StorePiggyBankRequest $request, PiggyBank $piggyBank): RedirectResponse
     {
         // Cannot edit a piggy bank that isnt theirs
         if (Auth::user()->id !== $piggyBank->user_id) {
