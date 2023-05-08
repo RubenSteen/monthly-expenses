@@ -58,4 +58,14 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function isAdmin()
+    {
+        return $this->admin != null ? true : false;
+    }
+
+    public function isSuperAdmin()
+    {
+        return $this->super_admin != null ? true : false;
+    }
 }
