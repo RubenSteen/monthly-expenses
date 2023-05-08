@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PiggyBankController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,9 +39,8 @@ Route::middleware([
         return Inertia::render('Income');
     })->name('income.index');
 
-    Route::get('/piggy-bank', function () {
-        return Inertia::render('PiggyBank');
-    })->name('piggy-bank.index');
+    Route::get('/piggy-bank', [PiggyBankController::class, 'index'])->name('piggy-bank.index');
+    Route::post('/piggy-bank', [PiggyBankController::class, 'store'])->name('piggy-bank.store');
 
     Route::get('/expenses', function () {
         return Inertia::render('Expenses');
