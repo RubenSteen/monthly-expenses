@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { Link } from '@inertiajs/vue3';
 
 import {
   WalletIcon,
@@ -15,26 +16,38 @@ const stats = [
   { id: 2, name: 'Dagen te gaan', stat: '14', },
 ]
 
+const incomeStats = {
+  name: 'Inkomen',
+  amount: '€3857,45',
+  icon: CurrencyEuroIcon,
+  link: route('income.index'),
+}
+
+
 const monthStats = [
   {
     name: 'Uitgaven',
     amount: '€249.27',
     icon: BanknotesIcon,
+    link: route('expenses.index'),
   },
   {
     name: 'Gezamelijke Uitgaven',
     amount: '€1,334.37',
     icon: CreditCardIcon,
+    link: route('collective-expenses.index'),
   },
   {
     name: 'Sparen',
     amount: '€130.00',
     icon: WalletIcon,
+    link: route('savings.index'),
   },
   {
     name: 'Gezamelijk Sparen',
     amount: '€375.00',
     icon: HomeModernIcon,
+    link: route('collective-savings.index'),
   },
 ]
 </script>
@@ -78,14 +91,14 @@ const monthStats = [
             <div
               class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
               <div class="flex-shrink-0">
-                <component :is="CurrencyEuroIcon" class="h-10 w-10 shrink-0" aria-hidden="true" />
+                <component :is="incomeStats.icon" class="h-10 w-10 shrink-0" aria-hidden="true" />
               </div>
               <div class="min-w-0 flex-1">
-                <a href="#" class="focus:outline-none">
-                  <span class="absolute inset-0" aria-hidden="true" />
-                  <p class="text-sm font-medium text-gray-900">Inkomen</p>
-                  <p class="truncate text-sm text-gray-500">€3857,45</p>
-                </a>
+                <Link :href="incomeStats.link" class="focus:outline-none">
+                <span class="absolute inset-0" aria-hidden="true" />
+                <p class="text-sm font-medium text-gray-900">{{ incomeStats.name }}</p>
+                <p class="truncate text-sm text-gray-500">{{ incomeStats.amount }}</p>
+                </Link>
               </div>
             </div>
           </div>
@@ -97,11 +110,11 @@ const monthStats = [
                 <component :is="stat.icon" class="h-10 w-10 shrink-0" aria-hidden="true" />
               </div>
               <div class="min-w-0 flex-1">
-                <a href="#" class="focus:outline-none">
-                  <span class="absolute inset-0" aria-hidden="true" />
-                  <p class="text-sm font-medium text-gray-900">{{ stat.name }}</p>
-                  <p class="truncate text-sm text-gray-500">{{ stat.amount }}</p>
-                </a>
+                <Link :href="stat.link" class="focus:outline-none">
+                <span class="absolute inset-0" aria-hidden="true" />
+                <p class="text-sm font-medium text-gray-900">{{ stat.name }}</p>
+                <p class="truncate text-sm text-gray-500">{{ stat.amount }}</p>
+                </Link>
               </div>
             </div>
           </div>
