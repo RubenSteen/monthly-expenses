@@ -18,6 +18,7 @@ class PiggyBankFactory extends Factory
     {
         return [
             'name' => $this->faker->catchPhrase(),
+            'user_id' => \App\Models\User::factory(),
             'description' => $this->faker->boolean(50) ? $this->faker->realTextBetween(20, 100) : null,
         ];
     }
