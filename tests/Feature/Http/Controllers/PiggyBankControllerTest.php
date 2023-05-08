@@ -45,7 +45,43 @@ it('can create a piggy bank', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Create tests > Validation tests
+| Edit tests
+|--------------------------------------------------------------------------
+*/
+
+it('can edit a piggy bank', function () {
+    $piggyBank = PiggyBank::factory()->create(['user_id' => $this->user->id]);
+
+    $updatedPiggyBank = PiggyBank::factory()->make()->toArray();
+
+    actingAs($this->user)
+        ->put(route('piggy-bank.update', $piggyBank), $updatedPiggyBank)
+        ->assertStatus(302)
+        ->assertSessionHas(['success' => 'Potje aangepast']);
+
+    expect($this->user->fresh()->piggyBanks->first()->name)
+        ->toBe($updatedPiggyBank['name']);
+});
+
+it('cannot edit a piggy bank that isnt theirs', function () {
+    $otherUser = User::factory()->create();
+
+    $piggyBank = PiggyBank::factory()->create(['user_id' => $otherUser]);
+
+    $updatedPiggyBank = PiggyBank::factory()->make()->toArray();
+
+    actingAs($this->user)
+        ->put(route('piggy-bank.update', $piggyBank), $updatedPiggyBank)
+        ->assertStatus(302)
+        ->assertSessionHas(['error' => 'Dit is niet jou potje vriend']);
+
+    expect($piggyBank->fresh()->name)
+        ->toBe($piggyBank->name);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Validation tests
 |--------------------------------------------------------------------------
 */
 

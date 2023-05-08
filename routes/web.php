@@ -41,6 +41,7 @@ Route::middleware([
 
     Route::get('/piggy-bank', [PiggyBankController::class, 'index'])->name('piggy-bank.index');
     Route::post('/piggy-bank', [PiggyBankController::class, 'store'])->name('piggy-bank.store');
+    Route::put('/piggy-bank/{piggyBank}', [PiggyBankController::class, 'update'])->name('piggy-bank.update');
     Route::delete('/piggy-bank/{piggyBank}', [PiggyBankController::class, 'delete'])->name('piggy-bank.delete');
 
     Route::get('/expenses', function () {

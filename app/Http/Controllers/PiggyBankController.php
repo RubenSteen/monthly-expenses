@@ -34,6 +34,21 @@ class PiggyBankController extends Controller
         return Redirect::route('piggy-bank.index')->with(['success' => 'Potje aangemaakt']);
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, PiggyBank $piggyBank): RedirectResponse
+    {
+        // Cannot edit a piggy bank that isnt theirs
+        if (Auth::user()->id !== $piggyBank->user_id) {
+            return Redirect::back()->with('error', 'Dit is niet jou potje vriend');
+        }
+
+        $piggyBank->update($request->all());
+
+        return Redirect::back()->with('success', 'Potje aangepast');
+    }
+
     public function delete(PiggyBank $piggyBank): RedirectResponse
     {
         // Cannot delete a piggy bank that isnt theirs
