@@ -16,7 +16,17 @@ class PiggyBankController extends Controller
      */
     public function index()
     {
-        return Inertia::render('PiggyBank');
+        return Inertia::render('PiggyBank', [
+            'piggyBanks' => Auth::user()->piggyBanks()
+                ->get()
+                ->transform(fn ($piggyBank) => [
+                    'id' => $piggyBank->id,
+                    'name' => $piggyBank->name,
+                    'description' => $piggyBank->description,
+                    'amount' => '€25,57',
+                    'transactions_count' => 2,
+                ]),
+        ]);
     }
 
     /**

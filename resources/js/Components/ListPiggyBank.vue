@@ -5,8 +5,8 @@ import { ClipboardDocumentIcon } from '@heroicons/vue/24/outline'
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 const props = defineProps({
-    clients: {
-        type: Array,
+    piggyBanks: {
+        type: Object,
         default: false,
     },
 });
@@ -39,14 +39,14 @@ const pressedEdit = (id) => {
             </div>
         </div>
 
-        <button v-if="clients.length < 1" type="button"
+        <button v-if="piggyBanks.length < 1" type="button"
             class="mt-8 relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
             <component :is="ClipboardDocumentIcon" class="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" />
             <span class="mt-2 block text-sm font-semibold text-gray-900">Geen potjes gevonden</span>
         </button>
 
         <ul v-else role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
-            <li v-for="client in clients" :key="client.id" class="overflow-hidden rounded-xl border border-gray-200">
+            <li v-for="client in piggyBanks" :key="client.id" class="overflow-hidden rounded-xl border border-gray-200">
                 <div class="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
                     <div class="text-sm font-medium leading-6 text-gray-900">{{ client.name }}</div>
                     <Menu as="div" class="relative ml-auto">
