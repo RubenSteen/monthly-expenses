@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onUpdated } from 'vue'
+import { toRefs, watch } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import Modal from './Modal.vue';
 
@@ -25,6 +25,8 @@ const props = defineProps({
         default: {},
     },
 });
+
+const test = toRefs(props);
 
 const editState = () => {
     if (Object.keys(props.edit).length === 0) {
@@ -68,12 +70,18 @@ const deletePiggyBank = () => {
     });
 };
 
-onUpdated(() => {
-    if (editState()) {
-        form.name = props.edit.name
-        form.description = props.edit.description
-    }
+watch(test.show, () => {
+    form.defaults(props.edit)
+    form.reset();
 })
+
+// onUpdated(() => {
+//     form.defaults(props.edit)
+//     if (editState() && props.show === true) {
+//         // form.name = props.edit.name
+//         // form.description = props.edit.description
+//     }
+// })
 </script>
 
 <template>
@@ -138,7 +146,10 @@ onUpdated(() => {
                 </div>
             </div>
 
-            <div class="flex flex-row justify-end px-6 bg-gray-100 text-right">
+            <div class="flex flex-row justify-between px-6 bg-gray-100 text-right">
+                <div class="hidden min-[430px]:flex text-indigo-600 items-center text-xs">
+                    <span v-show="form.isDirty">Er zijn niet-opgeslagen wijzigingen</span>
+                </div>
                 <div class="my-2 flex items-center justify-end gap-x-6">
                     <button @click="close" type="button"
                         class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
