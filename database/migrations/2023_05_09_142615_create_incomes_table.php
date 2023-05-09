@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('from')->index();
             $table->foreignId('to')->index();
             $table->string('name');
-            $table->string('amount');
+            $table->integer('amount');
             $table->timestamps();
         });
     }
