@@ -36,7 +36,7 @@ const editPiggyBank = (id) => {
             <div class="overflow-hidden bg-white shadow mt-4">
                 <div class="px-4 py-5 sm:p-6">
 
-                    <ListPiggyBank :piggyBanks="piggyBanks" @pressedButton="newPiggyBank" @pressedEdit="editPiggyBank">
+                    <ListPiggyBank :piggyBanks="piggyBanks" @pressedNew="newPiggyBank" @pressedEdit="editPiggyBank">
                         <template #title>
                             Potjes
                         </template>

@@ -11,10 +11,10 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(['pressedButton', 'pressedEdit']);
+const emit = defineEmits(['pressedNew', 'pressedEdit']);
 
-const pressedButton = () => {
-    emit('pressedButton');
+const pressedNew = () => {
+    emit('pressedNew');
 };
 
 const pressedEdit = (id) => {
@@ -35,11 +35,11 @@ const pressedEdit = (id) => {
                 </p>
             </div>
             <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                <PrimaryButton @click="pressedButton">Nieuw</PrimaryButton>
+                <PrimaryButton @click="pressedNew">Nieuw</PrimaryButton>
             </div>
         </div>
 
-        <button v-if="piggyBanks.length < 1" @click="pressedButton" type="button"
+        <button v-if="piggyBanks.length < 1" @click="pressedNew" type="button"
             class="mt-8 relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
             <component :is="ClipboardDocumentIcon" class="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" />
             <span class="mt-2 block text-sm font-semibold text-gray-900">Geen potjes gevonden</span>

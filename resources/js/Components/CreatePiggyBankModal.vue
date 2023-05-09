@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { useForm } from '@inertiajs/vue3';
 import Modal from './Modal.vue';
 
 import { ClipboardDocumentListIcon, ExclamationCircleIcon, ChevronUpDownIcon } from '@heroicons/vue/24/outline'
@@ -19,13 +19,27 @@ defineProps({
         type: Boolean,
         default: true,
     },
-    errors: {
-        type: Object,
-        default: () => ({})
-    },
 });
 
+const form = useForm({
+    name: '',
+    description: '',
+});
+
+const submit = () => {
+    console.log('submit')
+    form.post(route('piggy-bank.store'), {
+        preserveScroll: true,
+        onSuccess: () => formSuccess(),
+    });
+};
+
+const formSuccess = () => {
+    close()
+};
+
 const close = () => {
+    form.reset()
     emit('close');
 };
 
@@ -64,28 +78,28 @@ const deletePiggyBank = () => {
                                     <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Naam</label>
                                     <div class="relative mt-2 rounded-md shadow-sm">
                                         <div class="mt-2">
-                                            <input type="text" name="name" id="name"
+                                            <input type="text" name="name" id="name" v-model="form.name"
                                                 class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
-                                                :class="`${errors.name ? 'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500' : 'ring-gray-300 placeholder:text-gray-400 focus:ring-indigo-600 text-gray-900'}`"
+                                                :class="`${form.errors.name ? 'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500' : 'ring-gray-300 placeholder:text-gray-400 focus:ring-indigo-600 text-gray-900'}`"
                                                 placeholder="Boodschappen" />
                                         </div>
                                     </div>
-                                    <p class="mt-2 text-sm text-red-600" id="name-error" v-if="errors.name">{{
-                                        errors.name
-                                    }}</p>
+                                    <p class="mt-2 text-sm text-red-600" id="name-error" v-if="form.errors.name">{{
+                                        form.errors.name }}</p>
                                 </div>
 
                                 <div class="col-span-full">
                                     <label for="description"
                                         class="block text-sm font-medium leading-6 text-gray-900">Beschrijving</label>
                                     <div class="mt-2">
-                                        <textarea id="description" name="description" rows="3"
+                                        <textarea id="description" name="description" rows="3" v-model="form.description"
                                             class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
-                                            :class="`${errors.name ? 'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500' : 'ring-gray-300 placeholder:text-gray-400 focus:ring-indigo-600 text-gray-900'}`" />
+                                            :class="`${form.errors.description ? 'text-red-900 ring-red-300 placeholder:text-red-300 focus:ring-red-500' : 'ring-gray-300 placeholder:text-gray-400 focus:ring-indigo-600 text-gray-900'}`" />
                                     </div>
-                                    <p class="mt-2 text-sm text-red-600" id="description-error" v-if="errors.description">{{
-                                        errors.description
-                                    }}</p>
+                                    <p class="mt-2 text-sm text-red-600" id="description-error"
+                                        v-if="form.errors.description">{{
+                                            form.errors.description
+                                        }}</p>
                                 </div>
 
                             </div>
@@ -100,7 +114,7 @@ const deletePiggyBank = () => {
         <div class="flex flex-row justify-end px-6 bg-gray-100 text-right">
             <div class="my-2 flex items-center justify-end gap-x-6">
                 <button @click="close" type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
-                <button type="submit"
+                <button type="submit" @click="submit" :disabled="form.processing"
                     class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
             </div>
         </div>
