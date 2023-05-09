@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Money;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,5 +15,9 @@ class Income extends Model
         'amount',
         'from',
         'to',
+    ];
+
+    protected $casts = [
+        'amount' => Money::class,
     ];
 }
