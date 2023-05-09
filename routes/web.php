@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\PiggyBankController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -35,9 +36,10 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::get('/income', function () {
-        return Inertia::render('Income');
-    })->name('income.index');
+    Route::get('/income', [IncomeController::class, 'index'])->name('income.index');
+    Route::post('/income', [IncomeController::class, 'store'])->name('income.store');
+    Route::put('/income/{income}', [IncomeController::class, 'update'])->name('income.update');
+    Route::delete('/income/{income}', [IncomeController::class, 'delete'])->name('income.delete');
 
     Route::get('/piggy-bank', [PiggyBankController::class, 'index'])->name('piggy-bank.index');
     Route::post('/piggy-bank', [PiggyBankController::class, 'store'])->name('piggy-bank.store');

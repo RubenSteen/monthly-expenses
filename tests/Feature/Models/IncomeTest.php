@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Transaction;
+use App\Models\Income;
 use App\Models\User;
 
 /*
@@ -9,8 +9,8 @@ use App\Models\User;
 |--------------------------------------------------------------------------
 */
 
-it('can create a transaction', function () {
-    $data = Transaction::factory()->make()->toArray();
+it('can create a income transaction', function () {
+    $data = Income::factory()->make()->toArray();
 
     $user = User::factory()->create();
 
@@ -19,14 +19,14 @@ it('can create a transaction', function () {
     expect($user->income)->toHaveCount(1);
 });
 
-// it('can retrieve a list of transactions', function () {
-//     $data = Transaction::factory()->count(5)->make()->toArray();
+it('can retrieve a list of income transactions', function () {
+    $data = Income::factory()->count(5)->make()->toArray();
 
-//     $user = User::factory()->create();
+    $user = User::factory()->create();
 
-//     foreach ($data as $array) {
-//         $user->income()->create($array);
-//     }
+    foreach ($data as $array) {
+        $user->income()->create($array);
+    }
 
-//     expect($user->income)->toHaveCount(5);
-// });
+    expect($user->income)->toHaveCount(5);
+});
