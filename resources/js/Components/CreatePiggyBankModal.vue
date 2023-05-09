@@ -26,7 +26,12 @@ const props = defineProps({
     },
 });
 
-const test = toRefs(props);
+const watchProps = toRefs(props);
+
+watch(watchProps.show, () => {
+    form.defaults(props.edit)
+    form.reset();
+})
 
 const editState = () => {
     if (Object.keys(props.edit).length === 0) {
@@ -69,19 +74,6 @@ const deletePiggyBank = () => {
         onSuccess: () => formSuccess(),
     });
 };
-
-watch(test.show, () => {
-    form.defaults(props.edit)
-    form.reset();
-})
-
-// onUpdated(() => {
-//     form.defaults(props.edit)
-//     if (editState() && props.show === true) {
-//         // form.name = props.edit.name
-//         // form.description = props.edit.description
-//     }
-// })
 </script>
 
 <template>
