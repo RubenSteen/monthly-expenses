@@ -17,8 +17,8 @@ const pressedNew = () => {
     emit('pressedNew');
 };
 
-const pressedEdit = (id) => {
-    emit('pressedEdit', id);
+const pressedEdit = (index) => {
+    emit('pressedEdit', index);
 };
 
 </script>
@@ -46,7 +46,8 @@ const pressedEdit = (id) => {
         </button>
 
         <ul v-else role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
-            <li v-for="client in piggyBanks" :key="client.id" class="overflow-hidden rounded-xl border border-gray-200">
+            <li v-for="(client, index) in piggyBanks" :key="index"
+                class="overflow-hidden rounded-xl border border-gray-200">
                 <div class="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
                     <div class="text-sm font-medium leading-6 text-gray-900">{{ client.name }}</div>
                     <Menu as="div" class="relative ml-auto">
@@ -67,7 +68,7 @@ const pressedEdit = (id) => {
                                         class="sr-only">, {{ client.name }}</span></a>
                                 </MenuItem>
                                 <MenuItem v-slot="{ active }">
-                                <a @click="pressedEdit(client.id)"
+                                <a @click="pressedEdit(index)"
                                     :class="[active ? 'bg-gray-50' : '', 'block px-3 py-1 text-sm leading-6 text-gray-900']">Bewerk<span
                                         class="sr-only">, {{ client.name }}</span></a>
                                 </MenuItem>

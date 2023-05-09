@@ -1,4 +1,5 @@
 <script setup>
+import { ref, watch, onUpdated } from 'vue'
 import { useForm } from '@inertiajs/vue3';
 import Modal from './Modal.vue';
 
@@ -6,7 +7,7 @@ import { ClipboardDocumentListIcon, ExclamationCircleIcon, ChevronUpDownIcon } f
 
 const emit = defineEmits(['close']);
 
-defineProps({
+const props = defineProps({
     show: {
         type: Boolean,
         default: false,
@@ -19,7 +20,18 @@ defineProps({
         type: Boolean,
         default: true,
     },
+    edit: {
+        type: Object,
+        default: {},
+    },
 });
+
+const editState = () => {
+    if (Object.keys(props.edit).length === 0) {
+        return false;
+    }
+    return true;
+};
 
 const form = useForm({
     name: '',
@@ -27,11 +39,17 @@ const form = useForm({
 });
 
 const submit = () => {
-    console.log('submit')
-    form.post(route('piggy-bank.store'), {
-        preserveScroll: true,
-        onSuccess: () => formSuccess(),
-    });
+    if (editState()) {
+        form.put(route('piggy-bank.update', props.edit), {
+            preserveScroll: true,
+            onSuccess: () => formSuccess(),
+        });
+    } else {
+        form.post(route('piggy-bank.store'), {
+            preserveScroll: true,
+            onSuccess: () => formSuccess(),
+        });
+    }
 };
 
 const formSuccess = () => {
@@ -46,10 +64,17 @@ const close = () => {
 const deletePiggyBank = () => {
 
 };
+
+onUpdated(() => {
+    if (editState()) {
+        form.name = props.edit.name
+        form.description = props.edit.description
+    }
+})
 </script>
 
 <template>
-    <Modal :show="show" :max-width="maxWidth" :closeable="closeable" @close="close">
+    <Modal :show="props.show" :max-width="props.maxWidth" :closeable="props.closeable" @close="close">
         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
 
             <div class="border-b border-gray-200 pb-5 sm:flex sm:items-center sm:justify-between">

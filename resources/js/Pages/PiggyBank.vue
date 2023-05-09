@@ -4,29 +4,41 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import ListPiggyBank from '@/Components/ListPiggyBank.vue';
 import CreatePiggyBankModal from '@/Components/CreatePiggyBankModal.vue';
 
-defineProps({
+const props = defineProps({
     piggyBanks: Array,
 });
 
 const showModal = ref(false);
 
+const selectedPiggyBank = ref({});
+
 const toggleModal = () => {
     showModal.value = !showModal.value;
 };
 
-const newPiggyBank = () => {
-    toggleModal();
+const closeModal = () => {
+    showModal.value = false;
+    selectedPiggyBank.value = {};
 };
 
-const editPiggyBank = (id) => {
-    console.log(id)
+const openModal = () => {
+    showModal.value = true;
+};
+
+const newPiggyBank = () => {
+    openModal();
+};
+
+const editPiggyBank = (index) => {
+    selectedPiggyBank.value = props.piggyBanks[index];
+    openModal();
 };
 
 </script>
 
 <template>
     <AppLayout title="Potjes">
-        <CreatePiggyBankModal :show="showModal" @close="toggleModal()">
+        <CreatePiggyBankModal :show="showModal" @close="closeModal" :edit="selectedPiggyBank">
             <template #title>
                 Potjes registreren
             </template>
