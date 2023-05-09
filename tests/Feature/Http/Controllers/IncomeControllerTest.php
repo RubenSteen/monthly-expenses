@@ -71,35 +71,40 @@ it('cannot create a income transaction with a piggy bank that isnt theirs', func
 |--------------------------------------------------------------------------
 */
 
-// it('can edit a piggy bank', function () {
-//     $piggyBank = PiggyBank::factory()->create(['user_id' => $this->user->id]);
+it('can edit a income transaction', function () {
+    $income = Income::factory()->create([
+        'user_id' => $this->user->id,
+    ]);
 
-//     $updatedPiggyBank = PiggyBank::factory()->make()->toArray();
+    $modifiedIncome = Income::factory()->make([
+        'user_id' => $this->user->id,
+    ])->toArray();
 
-//     actingAs($this->user)
-//         ->put(route('piggy-bank.update', $piggyBank), $updatedPiggyBank)
-//         ->assertStatus(302)
-//         ->assertSessionHas(['success' => 'Potje aangepast']);
+    actingAs($this->user)
+        ->put(route('income.update', $income), $modifiedIncome)
+        ->assertStatus(302)
+        ->assertSessionHas(['success' => 'Inkomen aangepast']);
 
-//     expect($this->user->fresh()->piggyBanks->first()->name)
-//         ->toBe($updatedPiggyBank['name']);
-// });
+    expect($this->user->fresh()->income->first()->name)
+        ->toBe($modifiedIncome['name']);
+});
 
-// it('cannot edit a piggy bank that isnt theirs', function () {
-//     $otherUser = User::factory()->create();
+it('cannot edit a income transaction that isnt theirs', function () {
+    $otherUser = User::factory()->create();
 
-//     $piggyBank = PiggyBank::factory()->create(['user_id' => $otherUser]);
+    $income = Income::factory()->create([
+        'user_id' => $otherUser->id,
+    ]);
 
-//     $updatedPiggyBank = PiggyBank::factory()->make()->toArray();
+    $modifiedIncome = Income::factory()->make([
+        'user_id' => $this->user->id,
+    ])->toArray();
 
-//     actingAs($this->user)
-//         ->put(route('piggy-bank.update', $piggyBank), $updatedPiggyBank)
-//         ->assertStatus(302)
-//         ->assertSessionHas(['error' => 'Dit is niet jou potje vriend']);
-
-//     expect($piggyBank->fresh()->name)
-//         ->toBe($piggyBank->name);
-// });
+    actingAs($this->user)
+        ->put(route('income.update', $income), $modifiedIncome)
+        ->assertStatus(302)
+        ->assertSessionHas(['error' => 'Dit is niet jou inkomen vriend']);
+});
 
 /*
 |--------------------------------------------------------------------------

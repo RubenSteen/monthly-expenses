@@ -11,9 +11,6 @@ use Inertia\Inertia;
 
 class IncomeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return Inertia::render('Income', [
@@ -34,6 +31,18 @@ class IncomeController extends Controller
         Auth::user()->income()->create($request->validated());
 
         return Redirect::route('piggy-bank.index')->with(['success' => 'Inkomen aangemaakt']);
+    }
+
+    public function update(StoreTransactionRequest $request, Income $income): RedirectResponse
+    {
+        // Cannot delete a income transaction that isnt theirs
+        if (Auth::user()->id !== $income->user_id) {
+            return Redirect::back()->with('error', 'Dit is niet jou inkomen vriend');
+        }
+
+        $income->update($request->all());
+
+        return Redirect::back()->with('success', 'Inkomen aangepast');
     }
 
     public function delete(Income $income): RedirectResponse
