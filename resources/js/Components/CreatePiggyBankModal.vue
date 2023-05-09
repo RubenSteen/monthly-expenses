@@ -62,7 +62,10 @@ const close = () => {
 };
 
 const deletePiggyBank = () => {
-
+    form.delete(route('piggy-bank.update', props.edit), {
+        preserveScroll: true,
+        onSuccess: () => formSuccess(),
+    });
 };
 
 onUpdated(() => {
@@ -88,7 +91,7 @@ onUpdated(() => {
                     </h3>
                 </div>
                 <div class="mt-3 sm:ml-4 sm:mt-0">
-                    <button type="button"
+                    <button type="button" v-if="editState()" @click="deletePiggyBank"
                         class="inline-flex items-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Delete</button>
                 </div>
             </div>
