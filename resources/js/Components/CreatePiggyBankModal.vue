@@ -62,7 +62,7 @@ const close = () => {
 };
 
 const deletePiggyBank = () => {
-    form.delete(route('piggy-bank.update', props.edit), {
+    form.delete(route('piggy-bank.delete', props.edit), {
         preserveScroll: true,
         onSuccess: () => formSuccess(),
     });
