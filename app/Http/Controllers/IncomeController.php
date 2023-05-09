@@ -31,7 +31,7 @@ class IncomeController extends Controller
 
     public function store(StoreTransactionRequest $request): RedirectResponse
     {
-        Auth::user()->income()->create($request->all());
+        Auth::user()->income()->create($request->validated());
 
         return Redirect::route('piggy-bank.index')->with(['success' => 'Inkomen aangemaakt']);
     }

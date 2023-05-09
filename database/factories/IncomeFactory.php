@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\PiggyBank;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,16 +16,17 @@ class IncomeFactory extends Factory
      */
     public function definition(): array
     {
-        $user = \App\Models\User::factory()->create();
-        $firstPiggyBank = PiggyBank::factory()->create(['user_id' => $user->id]);
-        $secondPiggyBank = PiggyBank::factory()->create(['user_id' => $user->id]);
 
         return [
             'name' => $this->faker->catchPhrase(),
-            'user_id' => $user->id,
+            'user_id' => \App\Models\User::factory()->create(),
             'amount' => rand(100, 100000),
-            'from' => $firstPiggyBank->id,
-            'to' => $secondPiggyBank->id,
+            'from' => function (array $attributes) {
+                return \App\Models\PiggyBank::factory()->create(['user_id' => $attributes['user_id']]);
+            },
+            'to' => function (array $attributes) {
+                return \App\Models\PiggyBank::factory()->create(['user_id' => $attributes['user_id']]);
+            },
         ];
     }
 }

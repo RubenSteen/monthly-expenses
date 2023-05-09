@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\PiggyBankIsFromUser;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTransactionRequest extends FormRequest
@@ -24,6 +25,8 @@ class StoreTransactionRequest extends FormRequest
         return [
             'name' => 'required',
             'amount' => 'required',
+            'to' => ['required', new PiggyBankIsFromUser],
+            'from' => ['required', new PiggyBankIsFromUser],
         ];
     }
 }

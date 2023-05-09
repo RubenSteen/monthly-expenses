@@ -50,16 +50,16 @@ it('can create a income transaction', function () {
         ->toBe($data['name']);
 });
 
-it('cannort create a income transaction with a piggy bank that isnt theirs', function (string $field) {
+it('cannot create a income transaction with a piggy bank that isnt theirs', function (string $field) {
     $otherUser = User::factory()->create();
     $otherPiggyBank = PiggyBank::factory()->create(['user_id' => $otherUser->id]);
 
-    $data = Income::factory()->make([$field => $otherPiggyBank->id])->toArray();
+    $data = Income::factory()->make([$field => $otherPiggyBank->id, 'user_id' => $this->user->id])->toArray();
 
     actingAs($this->user)
         ->post(route('income.store', $data))
         ->assertStatus(302)
-        ->assertSessionHas(['error' => 'Dit is niet jou potje vriend']);
+        ->assertSessionHasErrors([$field => 'Dit is niet jou potje vriend']);
 })->with([
     'from' => ['from'],
     'to' => ['to'],
