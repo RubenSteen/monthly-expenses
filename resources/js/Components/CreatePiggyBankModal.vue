@@ -2,8 +2,7 @@
 import { toRefs, watch } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import Modal from './Modal.vue';
-
-import { ClipboardDocumentListIcon, ExclamationCircleIcon, ChevronUpDownIcon } from '@heroicons/vue/24/outline'
+import { ClipboardDocumentListIcon } from '@heroicons/vue/24/outline'
 
 const emit = defineEmits(['close']);
 
@@ -49,29 +48,24 @@ const submit = () => {
     if (editState()) {
         form.put(route('piggy-bank.update', props.edit), {
             preserveScroll: true,
-            onSuccess: () => formSuccess(),
+            onSuccess: () => close(),
         });
     } else {
         form.post(route('piggy-bank.store'), {
             preserveScroll: true,
-            onSuccess: () => formSuccess(),
+            onSuccess: () => close(),
         });
     }
 };
 
-const formSuccess = () => {
-    close()
-};
-
 const close = () => {
-    form.reset()
     emit('close');
 };
 
 const deletePiggyBank = () => {
     form.delete(route('piggy-bank.delete', props.edit), {
         preserveScroll: true,
-        onSuccess: () => formSuccess(),
+        onSuccess: () => close(),
     });
 };
 </script>
@@ -88,7 +82,7 @@ const deletePiggyBank = () => {
                             <component :is="ClipboardDocumentListIcon" class="h-6 w-6 text-indigo-600" aria-hidden="true" />
                         </div>
                         <h3 class="text-base font-semibold leading-6 text-gray-90 pl-2">
-                            <slot name="title" />
+                            {{ props.edit.name ? 'Potje aanpassen: ' + props.edit.name : "Potje aanmaken" }}
                         </h3>
                     </div>
                     <div class="mt-3 sm:ml-4 sm:mt-0">

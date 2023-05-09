@@ -38,11 +38,7 @@ const editPiggyBank = (index) => {
 
 <template>
     <AppLayout title="Potjes">
-        <CreatePiggyBankModal :show="showModal" @close="closeModal" :edit="selectedPiggyBank">
-            <template #title>
-                Potjes registreren
-            </template>
-        </CreatePiggyBankModal>
+        <CreatePiggyBankModal :show="showModal" @close="closeModal" :edit="selectedPiggyBank" />
 
         <div class="px-4 sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow mt-4">
