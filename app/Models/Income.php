@@ -25,7 +25,7 @@ class Income extends Model
     /**
      * Gets the piggybank where the transaction is coming from
      */
-    public function from(): BelongsTo
+    public function from()
     {
         return $this->belongsTo(PiggyBank::class);
     }

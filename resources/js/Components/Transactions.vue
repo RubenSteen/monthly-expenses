@@ -4,7 +4,7 @@ import { ClipboardDocumentIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
     data: {
-        type: Array,
+        type: Object,
         default: false,
     },
 });
@@ -15,8 +15,8 @@ const pressedButton = () => {
     emit('pressedButton');
 };
 
-const pressedEdit = (id) => {
-    emit('pressedEdit', id);
+const pressedEdit = (index) => {
+    emit('pressedEdit', index);
 };
 </script>
 
@@ -74,7 +74,7 @@ const pressedEdit = (id) => {
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
-                            <tr v-for="transaction in data" :key="transaction.id">
+                            <tr v-for="(transaction, index) in data" :key="transaction.id">
                                 <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">
                                     {{ transaction.name }}
                                 </td>
@@ -85,14 +85,14 @@ const pressedEdit = (id) => {
                                     {{ transaction.period }}
                                 </td> -->
                                 <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                                    {{ transaction.from }}
+                                    {{ transaction.from.name }}
                                 </td>
                                 <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
-                                    {{ transaction.to }}
+                                    {{ transaction.to.name }}
                                 </td>
                                 <td
                                     class="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                    <button @click="pressedEdit(transaction.id)"
+                                    <button @click="pressedEdit(index)"
                                         class="text-indigo-600 hover:text-indigo-900">Bewerk<span class="sr-only">, {{
                                             transaction.id }}</span></button>
                                 </td>

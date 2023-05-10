@@ -4,44 +4,38 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Transactions from '@/Components/Transactions.vue';
 import CreateTransactionModal from '@/Components/CreateTransactionModal.vue';
 
+const props = defineProps({
+    transactions: Array,
+    piggyBanks: Array,
+});
+
 const showModal = ref(false);
 
-const toggleModal = () => {
-    showModal.value = !showModal.value;
+const selectedIncome = ref({});
+
+const closeModal = () => {
+    showModal.value = false;
+    selectedIncome.value = {};
+};
+
+const openModal = () => {
+    showModal.value = true;
 };
 
 const newTransaction = () => {
-    toggleModal();
+    openModal();
 };
 
-const editTransaction = (id) => {
-    console.log(id)
+const editTransaction = (index) => {
+    selectedIncome.value = props.transactions[index];
+    openModal();
 };
-
-const transactions = [
-    {
-        id: 1,
-        name: 'Salaris Werk',
-        amount: '€2215,14',
-        period: 'Maandelijks',
-        from: 'Extern',
-        to: 'Mij',
-    },
-    {
-        id: 2,
-        name: 'Huurtoeslag',
-        amount: '€196,57',
-        period: 'Maandelijks',
-        from: 'Extern',
-        to: 'Mij',
-    },
-];
 </script>
 
 <template>
     <AppLayout title="Inkomen">
 
-        <CreateTransactionModal :show="showModal" @close="toggleModal()">
+        <CreateTransactionModal :show="showModal" @close="closeModal" :piggyBanks="piggyBanks" :edit="selectedIncome">
             <template #title>
                 Inkomen registreren
             </template>

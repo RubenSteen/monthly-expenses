@@ -13,27 +13,23 @@ class IncomeController extends Controller
 {
     public function index()
     {
-        $data = Auth::user()->income()
-            ->get()
-            ->transform(fn ($transaction) => [
-                'id' => $transaction->id,
-                'name' => $transaction->name,
-                'amount' => $transaction->amount,
-                'from' => $transaction->from,
-                'to' => 2,
-            ]);
-
-        dd($data->first());
-
         return Inertia::render('Income', [
             'transactions' => Auth::user()->income()
                 ->get()
                 ->transform(fn ($transaction) => [
                     'id' => $transaction->id,
                     'name' => $transaction->name,
-                    'amount' => $transaction->description,
-                    'from' => '€25,57',
-                    'to' => 2,
+                    'amount' => $transaction->amount,
+                    'from' => $transaction->from->only(['id', 'name', 'description']),
+                    'to' => $transaction->to->only(['id', 'name', 'description']),
+                    // 'from_id' => $transaction->from->id,
+                    // 'to_id' => $transaction->to->id,
+                ]),
+            'piggyBanks' => Auth::user()->piggyBanks()
+                ->get()
+                ->transform(fn ($piggyBank) => [
+                    'id' => $piggyBank->id,
+                    'name' => $piggyBank->name,
                 ]),
         ]);
     }
@@ -42,7 +38,7 @@ class IncomeController extends Controller
     {
         Auth::user()->income()->create($request->validated());
 
-        return Redirect::route('piggy-bank.index')->with(['success' => 'Inkomen aangemaakt']);
+        return Redirect::back()->with(['success' => 'Inkomen aangemaakt']);
     }
 
     public function update(StoreTransactionRequest $request, Income $income): RedirectResponse
