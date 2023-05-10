@@ -59,7 +59,7 @@ it('can edit a piggy bank', function () {
         ->assertStatus(302)
         ->assertSessionHas(['success' => 'Potje aangepast']);
 
-    expect($this->user->fresh()->piggyBanks->first()->name)
+    expect($this->user->fresh()->piggyBanks->last()->name)
         ->toBe($updatedPiggyBank['name']);
 });
 

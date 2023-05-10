@@ -5,6 +5,12 @@ use App\Models\User;
 use Carbon\Carbon;
 use function Pest\Laravel\{actingAs};
 
+it('every new user automaticly gets 1 piggy bank named eigen rekening', function () {
+    $user = User::factory()->create();
+
+    expect($user->piggyBanks)->toHaveCount(1);
+});
+
 /*
 |--------------------------------------------------------------------------
 | Last Activity tests
@@ -31,7 +37,7 @@ it('can create a piggy bank', function () {
 
     $user->piggyBanks()->create($data);
 
-    expect($user->piggyBanks)->toHaveCount(1);
+    expect($user->piggyBanks)->toHaveCount(2);
 });
 
 it('can retrieve a list of piggy banks', function () {
@@ -43,5 +49,5 @@ it('can retrieve a list of piggy banks', function () {
         $user->piggyBanks()->create($array);
     }
 
-    expect($user->piggyBanks)->toHaveCount(5);
+    expect($user->piggyBanks)->toHaveCount(6);
 });

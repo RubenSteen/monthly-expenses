@@ -31,24 +31,33 @@ const props = defineProps({
 
 const watchProps = toRefs(props);
 
+// watch(watchProps.show, () => {
+//     let from_and_to = {};
+
+//     // If we are in edit mode, then get the object from/to and convert them into id's
+//     if (editState()) {
+//         from_and_to = {
+//             from_id: props.edit.from.id,
+//             to_id: props.edit.to.id,
+//         }
+//     }
+
+//     // Merge the from_and_to into props.edit
+//     form.defaults({
+//         ...props.edit,
+//         ...from_and_to
+//     })
+
+//     form.reset();
+// })
+
 watch(watchProps.show, () => {
-    let from_and_to = {};
-
-    // If we are in edit mode, then get the object from/to and convert them into id's
-    if (editState()) {
-        from_and_to = {
-            from_id: props.edit.from.id,
-            to_id: props.edit.to.id,
-        }
-    }
-
-    // Merge the from_and_to into props.edit
     form.defaults({
-        ...props.edit,
-        ...from_and_to
-    })
-
-    form.reset();
+        name: props.edit.name ? props.edit.name : '',
+        amount: props.edit.amount ? props.edit.amount : '',
+        from_id: props.edit.from ? props.edit.from.id : 1,
+        to_id: props.edit.to ? props.edit.to.id : 1,
+    }).reset()
 })
 
 const editState = () => {

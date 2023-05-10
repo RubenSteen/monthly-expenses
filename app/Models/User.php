@@ -29,6 +29,16 @@ class User extends Authenticatable implements MustVerifyEmail
         static::creating(function (User $user) {
             $user->last_activity = now();
         });
+
+        static::created(function (User $user) {
+
+            //Create a default PiggyBank if the user does not have one.
+            if ($user->piggyBanks()->count() === 0) {
+                $user->piggyBanks()->create([
+                    'name' => 'Eigen rekening',
+                ]);
+            }
+        });
     }
 
     /**
