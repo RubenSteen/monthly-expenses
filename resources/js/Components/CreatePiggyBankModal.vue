@@ -64,8 +64,11 @@ const deletePiggyBank = () => {
     });
 };
 
-watch(watchProps.show, () => {
-    form.defaults(props.edit).reset()
+watch(watchProps.show, (show) => {
+    form.defaults({
+        name: props.edit.name ? props.edit.name : '',
+        description: props.edit.description ? props.edit.description : '',
+    }).reset()
 })
 </script>
 
