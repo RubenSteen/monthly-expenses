@@ -4,44 +4,43 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Transactions from '@/Components/Transactions.vue';
 import CreateTransactionModal from '@/Components/CreateTransactionModal.vue';
 
+const props = defineProps({
+    transactions: Array,
+    piggyBanks: Array,
+    routePrefix: {
+        type: String,
+        default: "collective-expense",
+    },
+});
+
 const showModal = ref(false);
 
-const toggleModal = () => {
-    showModal.value = !showModal.value;
+const selectedEdit = ref({});
+
+const closeModal = () => {
+    showModal.value = false;
+    selectedEdit.value = {};
+};
+
+const openModal = () => {
+    showModal.value = true;
 };
 
 const newTransaction = () => {
-    toggleModal();
+    openModal();
 };
 
-const editTransaction = (id) => {
-    console.log(id)
+const editTransaction = (index) => {
+    selectedEdit.value = props.transactions[index];
+    openModal();
 };
-
-const transactions = [
-    {
-        id: 1,
-        name: 'Boodschappen',
-        amount: '€200.00',
-        period: 'Maandelijks',
-        from: 'Mij',
-        to: 'Boodchappen',
-    },
-    {
-        id: 2,
-        name: 'Internet en Televisie',
-        amount: '€25,57',
-        period: 'Maandelijks',
-        from: 'Mij',
-        to: 'Gezamelijke rekening',
-    },
-]
 </script>
 
 <template>
-    <AppLayout title="Gezamelijke uitgaven">
+    <AppLayout title="Inkomen">
 
-        <CreateTransactionModal :show="showModal" @close="toggleModal()">
+        <CreateTransactionModal :show="showModal" @close="closeModal" :piggyBanks="piggyBanks" :edit="selectedEdit"
+            :routePrefix="routePrefix">
             <template #title>
                 Gezamelijke uitgaven registreren
             </template>

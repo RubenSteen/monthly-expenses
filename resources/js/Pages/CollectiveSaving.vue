@@ -4,54 +4,45 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Transactions from '@/Components/Transactions.vue';
 import CreateTransactionModal from '@/Components/CreateTransactionModal.vue';
 
+const props = defineProps({
+    transactions: Array,
+    piggyBanks: Array,
+    routePrefix: {
+        type: String,
+        default: "collective-saving",
+    },
+});
+
 const showModal = ref(false);
 
-const toggleModal = () => {
-    showModal.value = !showModal.value;
+const selectedEdit = ref({});
+
+const closeModal = () => {
+    showModal.value = false;
+    selectedEdit.value = {};
+};
+
+const openModal = () => {
+    showModal.value = true;
 };
 
 const newTransaction = () => {
-    toggleModal();
+    openModal();
 };
 
-const editTransaction = (id) => {
-    console.log(id)
+const editTransaction = (index) => {
+    selectedEdit.value = props.transactions[index];
+    openModal();
 };
-
-const transactions = [
-    {
-        id: 1,
-        name: 'Auto',
-        amount: '€100.00',
-        period: 'Maandelijks',
-        from: 'Mij',
-        to: 'Auto',
-    },
-    {
-        id: 2,
-        name: 'Koophuis',
-        amount: '€150.00',
-        period: 'Maandelijks',
-        from: 'Mij',
-        to: 'Koophuis',
-    },
-    {
-        id: 2,
-        name: 'Bezine',
-        amount: '€50.00',
-        period: 'Maandelijks',
-        from: 'Mij',
-        to: 'Boot',
-    },
-]
 </script>
 
 <template>
     <AppLayout title="Gezamelijk sparen">
 
-        <CreateTransactionModal :show="showModal" @close="toggleModal()">
+        <CreateTransactionModal :show="showModal" @close="closeModal" :piggyBanks="piggyBanks" :edit="selectedEdit"
+            :routePrefix="routePrefix">
             <template #title>
-                Gezamelijk spaardoelen registreren
+                Gezamelijke spaardoelen registreren
             </template>
         </CreateTransactionModal>
 
@@ -65,7 +56,7 @@ const transactions = [
                         </template>
 
                         <template #content>
-                            Registreer hier je gezamelijk spaardoelen
+                            Registreer hier je gezamelijke spaardoelen
                         </template>
                     </Transactions>
 

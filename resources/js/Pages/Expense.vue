@@ -15,11 +15,11 @@ const props = defineProps({
 
 const showModal = ref(false);
 
-const selectedIncome = ref({});
+const selectedEdit = ref({});
 
 const closeModal = () => {
   showModal.value = false;
-  selectedIncome.value = {};
+  selectedEdit.value = {};
 };
 
 const openModal = () => {
@@ -31,7 +31,7 @@ const newTransaction = () => {
 };
 
 const editTransaction = (index) => {
-  selectedIncome.value = props.transactions[index];
+  selectedEdit.value = props.transactions[index];
   openModal();
 };
 </script>
@@ -39,7 +39,7 @@ const editTransaction = (index) => {
 <template>
   <AppLayout title="Inkomen">
 
-    <CreateTransactionModal :show="showModal" @close="closeModal" :piggyBanks="piggyBanks" :edit="selectedIncome"
+    <CreateTransactionModal :show="showModal" @close="closeModal" :piggyBanks="piggyBanks" :edit="selectedEdit"
       :routePrefix="routePrefix">
       <template #title>
         Uitgaven registreren
