@@ -18,7 +18,7 @@ class IncomeController extends Controller
             ->transform(fn ($transaction) => [
                 'id' => $transaction->id,
                 'name' => $transaction->name,
-                'amount' => $transaction->description,
+                'amount' => $transaction->amount,
                 'from' => $transaction->from,
                 'to' => 2,
             ]);
