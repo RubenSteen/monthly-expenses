@@ -25,8 +25,8 @@ class StoreTransactionRequest extends FormRequest
         return [
             'name' => 'required',
             'amount' => 'required',
-            'to' => ['required', new PiggyBankIsFromUser],
-            'from' => ['required', new PiggyBankIsFromUser],
+            'to_id' => ['required', new PiggyBankIsFromUser],
+            'from_id' => ['required', new PiggyBankIsFromUser],
         ];
     }
 }

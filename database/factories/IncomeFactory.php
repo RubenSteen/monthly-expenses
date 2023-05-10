@@ -21,10 +21,10 @@ class IncomeFactory extends Factory
             'name' => $this->faker->catchPhrase(),
             'user_id' => \App\Models\User::factory()->create(),
             'amount' => 1000,
-            'from' => function (array $attributes) {
+            'from_id' => function (array $attributes) {
                 return \App\Models\PiggyBank::factory()->create(['user_id' => $attributes['user_id']]);
             },
-            'to' => function (array $attributes) {
+            'to_id' => function (array $attributes) {
                 return \App\Models\PiggyBank::factory()->create(['user_id' => $attributes['user_id']]);
             },
         ];

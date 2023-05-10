@@ -13,6 +13,18 @@ class IncomeController extends Controller
 {
     public function index()
     {
+        $data = Auth::user()->income()
+            ->get()
+            ->transform(fn ($transaction) => [
+                'id' => $transaction->id,
+                'name' => $transaction->name,
+                'amount' => $transaction->description,
+                'from' => $transaction->from,
+                'to' => 2,
+            ]);
+
+        dd($data->first());
+
         return Inertia::render('Income', [
             'transactions' => Auth::user()->income()
                 ->get()

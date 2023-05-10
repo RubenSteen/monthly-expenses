@@ -32,8 +32,8 @@ it('can view the income index page when logged in', function () {
 
 it('can create a income transaction', function () {
     $data = Income::factory()->make([
-        'from' => $this->firstPiggyBank->id,
-        'to' => $this->secondPiggyBank->id,
+        'from_id' => $this->firstPiggyBank->id,
+        'to_id' => $this->secondPiggyBank->id,
     ])->toArray();
 
     $count = $this->user->income->count();
@@ -61,8 +61,8 @@ it('cannot create a income transaction with a piggy bank that isnt theirs', func
         ->assertStatus(302)
         ->assertSessionHasErrors([$field => 'Dit is niet jou potje vriend']);
 })->with([
-    'from' => ['from'],
-    'to' => ['to'],
+    'from' => ['from_id'],
+    'to' => ['to_id'],
 ]);
 
 /*
