@@ -27,29 +27,12 @@ const props = defineProps({
         type: Object,
         default: {},
     },
+    routePrefix: {
+        type: String,
+    },
 });
 
 const watchProps = toRefs(props);
-
-// watch(watchProps.show, () => {
-//     let from_and_to = {};
-
-//     // If we are in edit mode, then get the object from/to and convert them into id's
-//     if (editState()) {
-//         from_and_to = {
-//             from_id: props.edit.from.id,
-//             to_id: props.edit.to.id,
-//         }
-//     }
-
-//     // Merge the from_and_to into props.edit
-//     form.defaults({
-//         ...props.edit,
-//         ...from_and_to
-//     })
-
-//     form.reset();
-// })
 
 watch(watchProps.show, () => {
     form.defaults({
@@ -76,12 +59,12 @@ const form = useForm({
 
 const submit = () => {
     if (editState()) {
-        form.put(route('income.update', props.edit), {
+        form.put(route(props.routePrefix + '.update', props.edit), {
             preserveScroll: true,
             onSuccess: () => close(),
         });
     } else {
-        form.post(route('income.store'), {
+        form.post(route(props.routePrefix + '.store'), {
             preserveScroll: true,
             onSuccess: () => close(),
         });
@@ -93,7 +76,7 @@ const close = () => {
 };
 
 const deletePiggyBank = () => {
-    form.delete(route('income.delete', props.edit), {
+    form.delete(route(props.routePrefix + '.delete', props.edit), {
         preserveScroll: true,
         onSuccess: () => close(),
     });

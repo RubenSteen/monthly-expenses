@@ -36,10 +36,10 @@ const navigation = [
 
 const secondNavigation = [
   { name: 'Inkomen', href: route('income.index'), icon: CurrencyEuroIcon, current: route().current('income.index') },
-  { name: 'Uitgaven', href: route('expenses.index'), icon: BanknotesIcon, current: route().current('expenses.index') },
-  { name: 'Gezamelijke Uitgaven', href: route('collective-expenses.index'), icon: CreditCardIcon, current: route().current('collective-expenses.index') },
-  { name: 'Sparen', href: route('savings.index'), icon: WalletIcon, current: route().current('savings.index') },
-  { name: 'Gezamelijk Sparen', href: route('collective-savings.index'), icon: HomeModernIcon, current: route().current('collective-savings.index') },
+  { name: 'Uitgaven', href: route('expense.index'), icon: BanknotesIcon, current: route().current('expense.index') },
+  { name: 'Gezamelijke Uitgaven', href: route('collective-expense.index'), icon: CreditCardIcon, current: route().current('collective-expense.index') },
+  { name: 'Sparen', href: route('saving.index'), icon: WalletIcon, current: route().current('saving.index') },
+  { name: 'Gezamelijk Sparen', href: route('collective-saving.index'), icon: HomeModernIcon, current: route().current('collective-saving.index') },
 ]
 
 const userNavigation = [

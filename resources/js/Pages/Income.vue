@@ -7,6 +7,10 @@ import CreateTransactionModal from '@/Components/CreateTransactionModal.vue';
 const props = defineProps({
     transactions: Array,
     piggyBanks: Array,
+    routePrefix: {
+        type: String,
+        default: "income",
+    },
 });
 
 const showModal = ref(false);
@@ -35,7 +39,8 @@ const editTransaction = (index) => {
 <template>
     <AppLayout title="Inkomen">
 
-        <CreateTransactionModal :show="showModal" @close="closeModal" :piggyBanks="piggyBanks" :edit="selectedIncome">
+        <CreateTransactionModal :show="showModal" @close="closeModal" :piggyBanks="piggyBanks" :edit="selectedIncome"
+            :routePrefix="routePrefix">
             <template #title>
                 Inkomen registreren
             </template>

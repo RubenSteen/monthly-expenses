@@ -105,4 +105,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Income::class);
     }
+
+    /**
+     * Gets the users their expense transactions
+     */
+    public function expense(): HasMany
+    {
+        return $this->hasMany(Expense::class);
+    }
 }

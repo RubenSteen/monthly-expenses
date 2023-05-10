@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\PiggyBankController;
 use Illuminate\Foundation\Application;
@@ -46,20 +47,21 @@ Route::middleware([
     Route::put('/piggy-bank/{piggyBank}', [PiggyBankController::class, 'update'])->name('piggy-bank.update');
     Route::delete('/piggy-bank/{piggyBank}', [PiggyBankController::class, 'delete'])->name('piggy-bank.delete');
 
-    Route::get('/expenses', function () {
-        return Inertia::render('Expenses');
-    })->name('expenses.index');
+    Route::get('/expense', [ExpenseController::class, 'index'])->name('expense.index');
+    Route::post('/expense', [ExpenseController::class, 'store'])->name('expense.store');
+    Route::put('/expense/{expense}', [ExpenseController::class, 'update'])->name('expense.update');
+    Route::delete('/expense/{expense}', [ExpenseController::class, 'delete'])->name('expense.delete');
 
     Route::get('/collective-expenses', function () {
         return Inertia::render('CollectiveExpenses');
-    })->name('collective-expenses.index');
+    })->name('collective-expense.index');
 
     Route::get('/savings', function () {
         return Inertia::render('Savings');
-    })->name('savings.index');
+    })->name('saving.index');
 
     Route::get('/collective-savings', function () {
         return Inertia::render('CollectiveSavings');
-    })->name('collective-savings.index');
+    })->name('collective-saving.index');
 
 });
