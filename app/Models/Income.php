@@ -17,7 +17,7 @@ class Income extends Model
         'to',
     ];
 
-    protected $casts = [
-        'amount' => Money::class,
-    ];
+    // protected $casts = [
+    //     'amount' => Money::class,
+    // ];
 }
