@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\PiggyBank;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,21 +21,13 @@ class CollectiveSavingFactory extends Factory
 
         return [
             'name' => $this->faker->catchPhrase(),
-            'user_id' => \App\Models\User::factory()->create(),
+            'user_id' => User::factory(),
             'amount' => 1000,
             'from_id' => function (array $attributes) {
-                if ($attributes['from_id']) {
-                    return $attributes['user_id'];
-                }
-
-                return \App\Models\PiggyBank::factory()->create(['user_id' => $attributes['user_id']]);
+                return PiggyBank::factory()->create(['user_id' => $attributes['user_id']]);
             },
             'to_id' => function (array $attributes) {
-                if ($attributes['from_id']) {
-                    return $attributes['user_id'];
-                }
-
-                return \App\Models\PiggyBank::factory()->create(['user_id' => $attributes['user_id']]);
+                return PiggyBank::factory()->create(['user_id' => $attributes['user_id']]);
             },
         ];
     }

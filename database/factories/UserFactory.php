@@ -39,6 +39,30 @@ class UserFactory extends Factory
     }
 
     /**
+     * Indicate that the user should be a super admin.
+     */
+    public function superAdmin(): static
+    {
+        return $this->state(function () {
+            return [
+                'super_admin' => now(),
+            ];
+        });
+    }
+
+    /**
+     * Indicate that the user should be a admin.
+     */
+    public function dmin(): static
+    {
+        return $this->state(function () {
+            return [
+                'admin' => now(),
+            ];
+        });
+    }
+
+    /**
      * Indicate that the model's email address should be unverified.
      */
     public function unverified(): static
