@@ -22,9 +22,17 @@ class CollectiveExpenseFactory extends Factory
             'user_id' => \App\Models\User::factory()->create(),
             'amount' => 1000,
             'from_id' => function (array $attributes) {
+                if ($attributes['from_id']) {
+                    return $attributes['user_id'];
+                }
+
                 return \App\Models\PiggyBank::factory()->create(['user_id' => $attributes['user_id']]);
             },
             'to_id' => function (array $attributes) {
+                if ($attributes['from_id']) {
+                    return $attributes['user_id'];
+                }
+
                 return \App\Models\PiggyBank::factory()->create(['user_id' => $attributes['user_id']]);
             },
         ];

@@ -14,7 +14,12 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
-            PiggyBankSeeder::class,
+            // PiggyBankSeeder::class,
+            // IncomeSeeder::class,
+            // ExpenseSeeder::class,
+            // CollectiveExpenseSeeder::class,
+            // SavingSeeder::class,
+            // CollectiveSavingSeeder::class,
         ]);
     }
 }
