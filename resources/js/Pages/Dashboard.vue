@@ -29,25 +29,25 @@ const monthStats = [
     name: 'Uitgaven',
     amount: '€249.27',
     icon: BanknotesIcon,
-    link: route('expenses.index'),
+    link: route('expense.index'),
   },
   {
     name: 'Gezamelijke Uitgaven',
     amount: '€1,334.37',
     icon: CreditCardIcon,
-    link: route('collective-expenses.index'),
+    link: route('collective-expense.index'),
   },
   {
     name: 'Sparen',
     amount: '€130.00',
     icon: WalletIcon,
-    link: route('savings.index'),
+    link: route('saving.index'),
   },
   {
     name: 'Gezamelijk Sparen',
     amount: '€375.00',
     icon: HomeModernIcon,
-    link: route('collective-savings.index'),
+    link: route('collective-saving.index'),
   },
 ]
 </script>
