@@ -18,9 +18,9 @@ class Income extends Model
         'to_id',
     ];
 
-    // protected $casts = [
-    //     'amount' => Money::class,
-    // ];
+    protected $casts = [
+        'amount' => Money::class,
+    ];
 
     /**
      * Gets the piggybank where the transaction is coming from

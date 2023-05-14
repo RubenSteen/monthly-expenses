@@ -37,7 +37,7 @@ const watchProps = toRefs(props);
 watch(watchProps.show, () => {
     form.defaults({
         name: props.edit.name ? props.edit.name : '',
-        amount: props.edit.amount ? props.edit.amount : '',
+        amount: props.edit.amount ? props.edit.amount.valueSeperatedCents : '',
         from_id: props.edit.from ? props.edit.from.id : 1,
         to_id: props.edit.to ? props.edit.to.id : 1,
     }).reset()

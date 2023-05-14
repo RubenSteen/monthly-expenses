@@ -79,7 +79,7 @@ const pressedEdit = (index) => {
                                     {{ transaction.name }}
                                 </td>
                                 <td class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
-                                    {{ transaction.amount }}
+                                    {{ transaction.amount.valueDisplay }}
                                 </td>
                                 <!-- <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
                                     {{ transaction.period }}
