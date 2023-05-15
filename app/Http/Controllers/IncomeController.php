@@ -34,7 +34,7 @@ class IncomeController extends Controller
 
     public function store(StoreTransactionRequest $request): RedirectResponse
     {
-        Auth::user()->income()->create($request->validated());
+        Auth::user()->income()->create($request->validated(), correctAmount($request->validated()['amount']));
 
         return Redirect::back()->with(['success' => 'Inkomen aangemaakt']);
     }
@@ -46,7 +46,7 @@ class IncomeController extends Controller
             return Redirect::back()->with('error', 'Dit is niet jou inkomen vriend');
         }
 
-        $income->update($request->validated());
+        $income->update(array_merge($request->validated(), correctAmount($request->validated()['amount'])));
 
         return Redirect::back()->with('success', 'Inkomen aangepast');
     }
