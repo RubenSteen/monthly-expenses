@@ -36,13 +36,13 @@ class TestUserSeeder extends Seeder
     {
         $user->income()->create(
             Income::factory()->make([
-                'name' => 'Salaris', 'amount' => 1000, 'user_id' => $user->id, 'from_id' => $user->piggyBanks->first()->id, 'to_id' => $user->piggyBanks->first()->id,
+                'name' => 'Salaris', 'amount' => 1000, 'user_id' => $user->id, 'to_id' => $user->piggyBanks->first()->id,
             ])->toArray()
         );
 
         $user->income()->create(
             Income::factory()->make([
-                'name' => 'Huurtoeslag', 'amount' => 1000, 'user_id' => $user->id, 'from_id' => $user->piggyBanks->first()->id, 'to_id' => $user->piggyBanks->first()->id,
+                'name' => 'Huurtoeslag', 'amount' => 1000, 'user_id' => $user->id, 'to_id' => $user->piggyBanks->first()->id,
             ])->toArray()
         );
     }

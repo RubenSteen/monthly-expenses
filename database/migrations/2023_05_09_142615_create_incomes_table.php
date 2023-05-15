@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('incomes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->index();
-            $table->foreignId('from_id')->index();
             $table->foreignId('to_id')->index();
             $table->string('name');
             $table->integer('amount');

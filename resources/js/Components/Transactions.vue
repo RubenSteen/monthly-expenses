@@ -60,7 +60,7 @@ const pressedEdit = (index) => {
                                     class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Herhaling
                                 </th> -->
-                                <th scope="col"
+                                <th scope="col" v-if="data[0].from"
                                     class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Van
                                 </th>
@@ -84,7 +84,7 @@ const pressedEdit = (index) => {
                                 <!-- <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
                                     {{ transaction.period }}
                                 </td> -->
-                                <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
+                                <td v-if="transaction.from" class="whitespace-nowrap px-2 py-2 text-sm text-gray-500">
                                     {{ transaction.from.name }}
                                 </td>
                                 <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500">

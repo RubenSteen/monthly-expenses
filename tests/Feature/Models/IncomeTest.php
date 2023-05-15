@@ -31,12 +31,6 @@ it('can retrieve a list of income transactions', function () {
     expect($user->income)->toHaveCount(5);
 });
 
-it('can retrieve the from piggy bank from the income transaction', function () {
-    $income = Income::factory()->create();
-
-    expect($income->from)->toBeInstanceOf(App\Models\PiggyBank::class);
-});
-
 it('can retrieve the to piggy bank from the income transaction', function () {
     $income = Income::factory()->create();
 

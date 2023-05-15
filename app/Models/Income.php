@@ -14,21 +14,12 @@ class Income extends Model
     protected $fillable = [
         'name',
         'amount',
-        'from_id',
         'to_id',
     ];
 
     protected $casts = [
         'amount' => Money::class,
     ];
-
-    /**
-     * Gets the piggybank where the transaction is coming from
-     */
-    public function from()
-    {
-        return $this->belongsTo(PiggyBank::class);
-    }
 
     /**
      * Gets the piggybank where the transaction is going to

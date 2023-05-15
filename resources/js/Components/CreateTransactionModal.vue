@@ -162,7 +162,7 @@ const deletePiggyBank = () => {
                                     }}</p>
                                 </div> -->
 
-                                <div class="sm:col-span-4">
+                                <div v-if="edit.from" class="sm:col-span-4">
                                     <div class="relative mt-2 rounded-md shadow-sm">
                                         <label for="from"
                                             class="block text-sm font-medium leading-6 text-gray-900">Van</label>
