@@ -36,6 +36,11 @@ it('can create a collective expense transaction', function () {
         'to_id' => $this->secondPiggyBank->id,
     ])->toArray();
 
+    // https://laracasts.com/discuss/channels/laravel/disabling-casts-when-using-factorymake?page=1&replyId=887987
+    $data = array_merge($data, [
+        'amount' => 1000,
+    ]);
+
     $count = $this->user->collectiveExpense->count();
 
     actingAs($this->user)
@@ -122,8 +127,20 @@ test('validation tests while creating', function (string $field, mixed $value, s
         ]);
 })->with([
     'name cannot be null' => ['name', null, 'The name field is required.'],
-    'amount cannot be null' => ['amount', null, 'The amount field is required.'],
 ]);
+
+test('validation tests while creating amount cannot be null', function () {
+    $data = CollectiveExpense::factory()->make()->toArray();
+
+    // https://laracasts.com/discuss/channels/laravel/disabling-casts-when-using-factorymake?page=1&replyId=887987
+    $data['amount'] = null;
+
+    actingAs($this->user)
+        ->post(route('collective-expense.store', $data))
+        ->assertSessionHasErrors([
+            'amount' => 'The amount field is required.',
+        ]);
+});
 
 /*
 |--------------------------------------------------------------------------

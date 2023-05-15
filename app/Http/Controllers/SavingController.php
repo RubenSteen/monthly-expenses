@@ -19,7 +19,7 @@ class SavingController extends Controller
                 ->transform(fn ($transaction) => [
                     'id' => $transaction->id,
                     'name' => $transaction->name,
-                    'amount' => $transaction->amount,
+                    'amount' => money($transaction->amount),
                     'from' => $transaction->from->only(['id', 'name', 'description']),
                     'to' => $transaction->to->only(['id', 'name', 'description']),
                     // 'from_id' => $transaction->from->id,
