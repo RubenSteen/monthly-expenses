@@ -17,7 +17,7 @@ class Money implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return \Brick\Money\Money::ofMinor($attributes['amount'], 'EUR');
+        return \Brick\Money\Money::ofMinor($attributes[$key], 'EUR');
     }
 
     /**

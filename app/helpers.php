@@ -13,6 +13,13 @@ if (! function_exists('money')) {
     }
 }
 
+if (! function_exists('moneyDisplay')) {
+    function moneyDisplay($object)
+    {
+        return money($object)['valueDisplay'];
+    }
+}
+
 // Add zero's if the cents in a euro are not specified
 if (! function_exists('correctAmount')) {
     function correctAmount($amount)

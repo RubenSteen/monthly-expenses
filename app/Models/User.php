@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Money;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -47,7 +48,14 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'total_income_amount',
+        'total_expense_amount',
+        'total_saving_amount',
+        'total_collective_expense_amount',
+        'collectiveSaving',
     ];
 
     /**
@@ -69,6 +77,11 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'total_income_amount' => Money::class,
+        'total_expense_amount' => Money::class,
+        'total_saving_amount' => Money::class,
+        'total_collective_expense_amount' => Money::class,
+        'total_collective_saving_amount' => Money::class,
     ];
 
     /**

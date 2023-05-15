@@ -11,6 +11,10 @@ import {
   RectangleStackIcon,
 } from '@heroicons/vue/24/outline'
 
+const props = defineProps({
+  totalStats: Object,
+});
+
 const stats = [
   { id: 1, name: 'Overgehouden budget', stat: '€415,85', },
   { id: 2, name: 'Dagen te gaan', stat: '14', },
@@ -18,7 +22,7 @@ const stats = [
 
 const incomeStats = {
   name: 'Inkomen',
-  amount: '€3857,45',
+  amount: props.totalStats.income,
   icon: CurrencyEuroIcon,
   link: route('income.index'),
 }
@@ -27,25 +31,25 @@ const incomeStats = {
 const monthStats = [
   {
     name: 'Uitgaven',
-    amount: '€249.27',
+    amount: props.totalStats.expense,
     icon: BanknotesIcon,
     link: route('expense.index'),
   },
   {
     name: 'Gezamelijke Uitgaven',
-    amount: '€1,334.37',
+    amount: props.totalStats.collectiveExpense,
     icon: CreditCardIcon,
     link: route('collective-expense.index'),
   },
   {
     name: 'Sparen',
-    amount: '€130.00',
+    amount: props.totalStats.saving,
     icon: WalletIcon,
     link: route('saving.index'),
   },
   {
     name: 'Gezamelijk Sparen',
-    amount: '€375.00',
+    amount: props.totalStats.collectiveSaving,
     icon: HomeModernIcon,
     link: route('collective-saving.index'),
   },

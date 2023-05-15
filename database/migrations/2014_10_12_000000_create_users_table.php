@@ -23,6 +23,11 @@ return new class extends Migration
             $table->string('profile_photo_path', 2048)->nullable();
             $table->datetime('admin')->nullable();
             $table->datetime('super_admin')->nullable();
+            $table->integer('total_income_amount')->default(0);
+            $table->integer('total_expense_amount')->default(0);
+            $table->integer('total_saving_amount')->default(0);
+            $table->integer('total_collective_expense_amount')->default(0);
+            $table->integer('total_collective_saving_amount')->default(0);
             $table->timestamps();
         });
     }
