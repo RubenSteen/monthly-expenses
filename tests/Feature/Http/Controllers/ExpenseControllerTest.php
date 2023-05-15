@@ -85,6 +85,10 @@ it('can edit a expense transaction', function () {
         'user_id' => $this->user->id,
     ])->toArray();
 
+    // https://laracasts.com/discuss/channels/laravel/disabling-casts-when-using-factorymake?page=1&replyId=887987
+    $expense['amount'] = 1000;
+    $modifiedExpense['amount'] = 1000;
+
     actingAs($this->user)
         ->put(route('expense.update', $expense), $modifiedExpense)
         ->assertStatus(302)

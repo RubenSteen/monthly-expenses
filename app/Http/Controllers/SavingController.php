@@ -36,7 +36,7 @@ class SavingController extends Controller
 
     public function store(StoreTransactionRequest $request): RedirectResponse
     {
-        Auth::user()->savings()->create($request->validated());
+        Auth::user()->savings()->create($request->validated(), correctAmount($request->validated()['amount']));
 
         return Redirect::back()->with(['success' => 'Spaardoel aangemaakt']);
     }
@@ -48,7 +48,7 @@ class SavingController extends Controller
             return Redirect::back()->with('error', 'Dit is niet jou spaardoel vriend');
         }
 
-        $saving->update($request->all());
+        $saving->update($request->validated(), correctAmount($request->validated()['amount']));
 
         return Redirect::back()->with('success', 'Spaardoel aangepast');
     }

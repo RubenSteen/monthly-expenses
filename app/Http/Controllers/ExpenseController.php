@@ -36,7 +36,7 @@ class ExpenseController extends Controller
 
     public function store(StoreTransactionRequest $request): RedirectResponse
     {
-        Auth::user()->expense()->create($request->validated());
+        Auth::user()->expense()->create($request->validated(), correctAmount($request->validated()['amount']));
 
         return Redirect::back()->with(['success' => 'Inkomen aangemaakt']);
     }
@@ -48,7 +48,7 @@ class ExpenseController extends Controller
             return Redirect::back()->with('error', 'Dit is niet jou uitgaven vriend');
         }
 
-        $expense->update($request->all());
+        $expense->update($request->validated(), correctAmount($request->validated()['amount']));
 
         return Redirect::back()->with('success', 'Inkomen aangepast');
     }

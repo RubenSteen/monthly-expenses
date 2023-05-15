@@ -85,6 +85,10 @@ it('can edit a saving transaction', function () {
         'user_id' => $this->user->id,
     ])->toArray();
 
+    // https://laracasts.com/discuss/channels/laravel/disabling-casts-when-using-factorymake?page=1&replyId=887987
+    $saving['amount'] = 1000;
+    $modifiedSaving['amount'] = 1000;
+
     actingAs($this->user)
         ->put(route('saving.update', $saving), $modifiedSaving)
         ->assertStatus(302)

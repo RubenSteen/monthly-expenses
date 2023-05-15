@@ -36,7 +36,7 @@ class CollectiveSavingController extends Controller
 
     public function store(StoreTransactionRequest $request): RedirectResponse
     {
-        Auth::user()->collectiveSaving()->create($request->validated());
+        Auth::user()->collectiveSaving()->create($request->validated(), correctAmount($request->validated()['amount']));
 
         return Redirect::back()->with(['success' => 'Gezamelijke spaardoel aangemaakt']);
     }
@@ -48,7 +48,7 @@ class CollectiveSavingController extends Controller
             return Redirect::back()->with('error', 'Dit is niet jou gezamelijke spaardoel vriend');
         }
 
-        $collectiveSaving->update($request->all());
+        $collectiveSaving->update($request->validated(), correctAmount($request->validated()['amount']));
 
         return Redirect::back()->with('success', 'Gezamelijke spaardoel aangepast');
     }

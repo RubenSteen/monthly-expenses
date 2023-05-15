@@ -85,6 +85,10 @@ it('can edit a collective saving transaction', function () {
         'user_id' => $this->user->id,
     ])->toArray();
 
+    // https://laracasts.com/discuss/channels/laravel/disabling-casts-when-using-factorymake?page=1&replyId=887987
+    $collectiveSaving['amount'] = 1000;
+    $modifiedCollectiveSaving['amount'] = 1000;
+
     actingAs($this->user)
         ->put(route('collective-saving.update', $collectiveSaving), $modifiedCollectiveSaving)
         ->assertStatus(302)
