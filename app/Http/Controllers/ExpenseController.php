@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTransactionRequest;
+use App\Jobs\CalculateTransactionTotalAmount;
 use App\Models\Expense;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,8 @@ class ExpenseController extends Controller
     {
         Auth::user()->expense()->create($request->validated(), correctAmount($request->validated()['amount']));
 
+        CalculateTransactionTotalAmount::dispatch(Auth::user()->expense);
+
         return Redirect::back()->with(['success' => 'Inkomen aangemaakt']);
     }
 
@@ -50,6 +53,8 @@ class ExpenseController extends Controller
 
         $expense->update($request->validated(), correctAmount($request->validated()['amount']));
 
+        CalculateTransactionTotalAmount::dispatch(Auth::user()->expense);
+
         return Redirect::back()->with('success', 'Inkomen aangepast');
     }
 
@@ -61,6 +66,8 @@ class ExpenseController extends Controller
         }
 
         $expense->delete();
+
+        CalculateTransactionTotalAmount::dispatch(Auth::user()->expense);
 
         return Redirect::back()->with('success', 'Inkomen verwijderd');
     }

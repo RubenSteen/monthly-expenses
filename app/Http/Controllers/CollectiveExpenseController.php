@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTransactionRequest;
+use App\Jobs\CalculateTransactionTotalAmount;
 use App\Models\CollectiveExpense;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,8 @@ class CollectiveExpenseController extends Controller
     {
         Auth::user()->collectiveExpense()->create($request->validated(), correctAmount($request->validated()['amount']));
 
+        CalculateTransactionTotalAmount::dispatch(Auth::user()->collectiveExpense);
+
         return Redirect::back()->with(['success' => 'Gezamelijke uitgaven aangemaakt']);
     }
 
@@ -50,6 +53,8 @@ class CollectiveExpenseController extends Controller
 
         $collectiveExpense->update($request->validated(), correctAmount($request->validated()['amount']));
 
+        CalculateTransactionTotalAmount::dispatch(Auth::user()->collectiveExpense);
+
         return Redirect::back()->with('success', 'Gezamelijke uitgaven aangepast');
     }
 
@@ -61,6 +66,8 @@ class CollectiveExpenseController extends Controller
         }
 
         $collectiveExpense->delete();
+
+        CalculateTransactionTotalAmount::dispatch(Auth::user()->collectiveExpense);
 
         return Redirect::back()->with('success', 'Gezamelijke uitgaven verwijderd');
     }

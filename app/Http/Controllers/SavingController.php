@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTransactionRequest;
+use App\Jobs\CalculateTransactionTotalAmount;
 use App\Models\Saving;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,8 @@ class SavingController extends Controller
     {
         Auth::user()->savings()->create($request->validated(), correctAmount($request->validated()['amount']));
 
+        CalculateTransactionTotalAmount::dispatch(Auth::user()->savings);
+
         return Redirect::back()->with(['success' => 'Spaardoel aangemaakt']);
     }
 
@@ -50,6 +53,8 @@ class SavingController extends Controller
 
         $saving->update($request->validated(), correctAmount($request->validated()['amount']));
 
+        CalculateTransactionTotalAmount::dispatch(Auth::user()->savings);
+
         return Redirect::back()->with('success', 'Spaardoel aangepast');
     }
 
@@ -61,6 +66,8 @@ class SavingController extends Controller
         }
 
         $saving->delete();
+
+        CalculateTransactionTotalAmount::dispatch(Auth::user()->savings);
 
         return Redirect::back()->with('success', 'Spaardoel verwijderd');
     }

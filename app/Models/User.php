@@ -55,7 +55,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'total_expense_amount',
         'total_saving_amount',
         'total_collective_expense_amount',
-        'collectiveSaving',
+        'total_collective_saving_amount',
     ];
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTransactionRequest;
+use App\Jobs\CalculateTransactionTotalAmount;
 use App\Models\CollectiveSaving;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,8 @@ class CollectiveSavingController extends Controller
     {
         Auth::user()->collectiveSaving()->create($request->validated(), correctAmount($request->validated()['amount']));
 
+        CalculateTransactionTotalAmount::dispatch(Auth::user()->collectiveSaving);
+
         return Redirect::back()->with(['success' => 'Gezamelijke spaardoel aangemaakt']);
     }
 
@@ -50,6 +53,8 @@ class CollectiveSavingController extends Controller
 
         $collectiveSaving->update($request->validated(), correctAmount($request->validated()['amount']));
 
+        CalculateTransactionTotalAmount::dispatch(Auth::user()->collectiveSaving);
+
         return Redirect::back()->with('success', 'Gezamelijke spaardoel aangepast');
     }
 
@@ -61,6 +66,8 @@ class CollectiveSavingController extends Controller
         }
 
         $collectiveSaving->delete();
+
+        CalculateTransactionTotalAmount::dispatch(Auth::user()->collectiveSaving);
 
         return Redirect::back()->with('success', 'Gezamelijke spaardoel verwijderd');
     }

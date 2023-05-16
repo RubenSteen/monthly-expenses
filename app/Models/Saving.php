@@ -22,6 +22,16 @@ class Saving extends Model
         'amount' => Money::class,
     ];
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function getTotalField(): string
+    {
+        return 'total_saving_amount';
+    }
+
     /**
      * Gets the piggybank where the transaction is coming from
      */

@@ -22,6 +22,16 @@ class CollectiveExpense extends Model
         'amount' => Money::class,
     ];
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function getTotalField(): string
+    {
+        return 'total_collective_expense_amount';
+    }
+
     /**
      * Gets the piggybank where the transaction is coming from
      */
