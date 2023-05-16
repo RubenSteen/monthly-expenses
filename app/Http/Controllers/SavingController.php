@@ -67,7 +67,7 @@ class SavingController extends Controller
 
         $saving->delete();
 
-        CalculateTransactionTotalAmount::dispatch(Auth::user()->savings);
+        CalculateTransactionTotalAmount::dispatch($saving->all(), $saving->user, $saving->getTotalField());
 
         return Redirect::back()->with('success', 'Spaardoel verwijderd');
     }

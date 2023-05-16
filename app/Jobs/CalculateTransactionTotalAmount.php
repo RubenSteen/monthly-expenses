@@ -13,20 +13,20 @@ class CalculateTransactionTotalAmount implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $user;
-
-    public $field;
+    public $empty;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(public $model)
+    public function __construct(public $model, public $user = null, public $field = null)
     {
         $this->model = $model;
 
-        $this->user = $model->first()->user;
+        $this->empty = is_null($model->first->exists()) ? true : false;
 
-        $this->field = $model->first()->getTotalField();
+        $this->user = is_null($user) ? $model->first()->user : $this->user;
+
+        $this->field = is_null($field) ? $model->first()->getTotalField() : $this->field;
     }
 
     /**
@@ -35,13 +35,12 @@ class CalculateTransactionTotalAmount implements ShouldQueue
     public function handle(): void
     {
         $budget = Money::of(0, 'EUR');
-
-        foreach ($this->model->pluck('amount') as $amount) {
-            $budget = $budget->plus($amount);
+        if (! $this->empty) {
+            foreach ($this->model->pluck('amount') as $amount) {
+                $budget = $budget->plus($amount);
+            }
         }
 
         $this->user->update([$this->field => $budget]);
-
-        // dd($this->model, $this->user, $this->field, $budget);
     }
 }
