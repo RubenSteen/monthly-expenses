@@ -67,7 +67,7 @@ class ExpenseController extends Controller
 
         $expense->delete();
 
-        CalculateTransactionTotalAmount::dispatch(Auth::user()->expense);
+        CalculateTransactionTotalAmount::dispatch($expense->all(), $expense->user, $expense->getTotalField());
 
         return Redirect::back()->with('success', 'Inkomen verwijderd');
     }

@@ -67,7 +67,7 @@ class CollectiveExpenseController extends Controller
 
         $collectiveExpense->delete();
 
-        CalculateTransactionTotalAmount::dispatch(Auth::user()->collectiveExpense);
+        CalculateTransactionTotalAmount::dispatch($collectiveExpense->all(), $collectiveExpense->user, $collectiveExpense->getTotalField());
 
         return Redirect::back()->with('success', 'Gezamelijke uitgaven verwijderd');
     }

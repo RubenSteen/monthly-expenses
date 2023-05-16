@@ -64,7 +64,7 @@ class IncomeController extends Controller
 
         $income->delete();
 
-        CalculateTransactionTotalAmount::dispatch(Auth::user()->income);
+        CalculateTransactionTotalAmount::dispatch($income->all(), $income->user, $income->getTotalField());
 
         return Redirect::back()->with('success', 'Inkomen verwijderd');
     }

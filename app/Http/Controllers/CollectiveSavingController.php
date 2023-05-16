@@ -67,7 +67,7 @@ class CollectiveSavingController extends Controller
 
         $collectiveSaving->delete();
 
-        CalculateTransactionTotalAmount::dispatch(Auth::user()->collectiveSaving);
+        CalculateTransactionTotalAmount::dispatch($collectiveSaving->all(), $collectiveSaving->user, $collectiveSaving->getTotalField());
 
         return Redirect::back()->with('success', 'Gezamelijke spaardoel verwijderd');
     }
