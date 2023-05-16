@@ -1,5 +1,6 @@
 <?php
 
+use Brick\Money\Money;
 use Illuminate\Support\Str;
 
 if (! function_exists('money')) {
@@ -33,5 +34,23 @@ if (! function_exists('correctAmount')) {
         }
 
         return ['amount' => $amount];
+    }
+}
+
+if (! function_exists('calculateLeftoverBudget')) {
+    function calculateLeftoverBudget($user = null)
+    {
+        if (is_null($user)) {
+            $user = \Auth::user();
+        }
+
+        $budget = Money::of(0, 'EUR')
+            ->plus($user->total_income_amount)
+            ->minus($user->total_expense_amount)
+            ->minus($user->total_saving_amount)
+            ->minus($user->total_collective_expense_amount)
+            ->minus($user->total_collective_saving_amount);
+
+        return moneyDisplay($budget);
     }
 }

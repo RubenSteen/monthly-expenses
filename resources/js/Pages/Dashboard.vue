@@ -12,6 +12,7 @@ import {
 } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
+  dashboardCards: Object,
   totalStats: Object,
 });
 
@@ -67,17 +68,17 @@ const monthStats = [
             <h3 class="text-base font-semibold leading-6 text-gray-900">Welkom, {{ $page.props.auth.user.name }}</h3>
 
             <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              <div v-for="item in stats" :key="item.id"
+              <div v-for="(card, index) in dashboardCards" :key="index"
                 class="relative overflow-hidden rounded bg-indigo-50 bg-opacity-75 px-4 pb-12 pt-5 shadow sm:px-6 sm:pt-6">
                 <dt>
-                  <p class="truncate text-sm font-medium text-gray-500">{{ item.name }}</p>
+                  <p class="truncate text-sm font-medium text-gray-500">{{ card.name }}</p>
                 </dt>
                 <dd class="flex items-baseline">
-                  <p class="text-2xl font-semibold text-gray-900">{{ item.stat }}</p>
+                  <p class="text-2xl font-semibold text-gray-900">{{ card.stat }}</p>
                   <div class="absolute inset-x-0 bottom-0 px-4 py-3 sm:px-6">
                     <!-- <div class="text-sm">
                       <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">View all<span class="sr-only">
-                          {{ item.name }} stats</span></a>
+                          {{ card.name }} stats</span></a>
                     </div> -->
                   </div>
                 </dd>

@@ -2,12 +2,12 @@
 
 use App\Http\Controllers\CollectiveExpenseController;
 use App\Http\Controllers\CollectiveSavingController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\PiggyBankController;
 use App\Http\Controllers\SavingController;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -37,17 +37,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard', [
-            'totalStats' => [
-                'income' => moneyDisplay(Auth::user()->total_income_amount),
-                'expense' => moneyDisplay(Auth::user()->total_expense_amount),
-                'saving' => moneyDisplay(Auth::user()->total_saving_amount),
-                'collectiveExpense' => moneyDisplay(Auth::user()->total_collective_expense_amount),
-                'collectiveSaving' => moneyDisplay(Auth::user()->total_collective_saving_amount),
-            ],
-        ]);
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/income', [IncomeController::class, 'index'])->name('income.index');
     Route::post('/income', [IncomeController::class, 'store'])->name('income.store');
