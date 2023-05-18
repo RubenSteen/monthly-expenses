@@ -32,6 +32,17 @@ class User extends Authenticatable implements MustVerifyEmail
         });
 
         static::created(function (User $user) {
+            //Create some default categories
+            $data = [
+                ['name' => 'Uitgaven'],
+                ['name' => 'Gezamelijke uitgaven'],
+                ['name' => 'Sparen'],
+                ['name' => 'Gezamelijk sparen'],
+            ];
+
+            foreach ($data as $category) {
+                $user->category()->create($category);
+            }
 
             //Create a default PiggyBank if the user does not have one.
             if ($user->piggyBanks()->count() === 0) {
