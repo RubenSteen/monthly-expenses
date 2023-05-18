@@ -11,6 +11,10 @@ beforeEach(function () {
 
     $this->firstPiggyBank = PiggyBank::factory()->create(['user_id' => $this->user->id]);
     $this->secondPiggyBank = PiggyBank::factory()->create(['user_id' => $this->user->id]);
+
+    $this->income = Income::factory()->create([
+        'user_id' => $this->user->id,
+    ]);
 });
 
 it('can view the income index page when logged in', function () {
@@ -31,7 +35,6 @@ it('can view the income index page when logged in', function () {
 */
 
 it('can create a income transaction', function () {
-    $this->withoutExceptionHandling();
     $data = Income::factory()->make([
         'to_id' => $this->secondPiggyBank->id,
     ])->toArray();
@@ -76,24 +79,19 @@ it('cannot create a income transaction with a piggy bank that isnt theirs', func
 */
 
 it('can edit a income transaction', function () {
-    $income = Income::factory()->create([
-        'user_id' => $this->user->id,
-    ]);
-
     $modifiedIncome = Income::factory()->make([
         'user_id' => $this->user->id,
     ])->toArray();
 
     // https://laracasts.com/discuss/channels/laravel/disabling-casts-when-using-factorymake?page=1&replyId=887987
-    $income['amount'] = 1000;
     $modifiedIncome['amount'] = 1000;
 
     actingAs($this->user)
-        ->put(route('income.update', $income), $modifiedIncome)
+        ->put(route('income.update', $this->income), $modifiedIncome)
         ->assertStatus(302)
         ->assertSessionHas(['success' => 'Inkomen aangepast']);
 
-    expect($this->user->fresh()->income->first()->name)
+    expect($this->user->fresh()->income->last()->name)
         ->toBe($modifiedIncome['name']);
 });
 
@@ -152,8 +150,6 @@ test('validation tests while creating amount cannot be null', function () {
 */
 
 it('can delete a income transaction', function () {
-    Income::factory()->count(5)->create(['user_id' => $this->user->id]);
-
     $count = $this->user->income->count();
 
     actingAs($this->user)

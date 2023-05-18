@@ -30,30 +30,30 @@ const incomeStats = {
 
 
 const monthStats = [
-  {
-    name: 'Uitgaven',
-    amount: props.totalStats.expense,
-    icon: BanknotesIcon,
-    link: route('expense.index'),
-  },
-  {
-    name: 'Gezamelijke Uitgaven',
-    amount: props.totalStats.collectiveExpense,
-    icon: CreditCardIcon,
-    link: route('collective-expense.index'),
-  },
-  {
-    name: 'Sparen',
-    amount: props.totalStats.saving,
-    icon: WalletIcon,
-    link: route('saving.index'),
-  },
-  {
-    name: 'Gezamelijk Sparen',
-    amount: props.totalStats.collectiveSaving,
-    icon: HomeModernIcon,
-    link: route('collective-saving.index'),
-  },
+  // {
+  //   name: 'Uitgaven',
+  //   amount: props.totalStats.expense,
+  //   icon: BanknotesIcon,
+  //   link: route('expense.index'),
+  // },
+  // {
+  //   name: 'Gezamelijke Uitgaven',
+  //   amount: props.totalStats.collectiveExpense,
+  //   icon: CreditCardIcon,
+  //   link: route('collective-expense.index'),
+  // },
+  // {
+  //   name: 'Sparen',
+  //   amount: props.totalStats.saving,
+  //   icon: WalletIcon,
+  //   link: route('saving.index'),
+  // },
+  // {
+  //   name: 'Gezamelijk Sparen',
+  //   amount: props.totalStats.collectiveSaving,
+  //   icon: HomeModernIcon,
+  //   link: route('collective-saving.index'),
+  // },
 ]
 </script>
 

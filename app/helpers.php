@@ -45,11 +45,7 @@ if (! function_exists('calculateLeftoverBudget')) {
         }
 
         $budget = Money::of(0, 'EUR')
-            ->plus($user->total_income_amount)
-            ->minus($user->total_expense_amount)
-            ->minus($user->total_saving_amount)
-            ->minus($user->total_collective_expense_amount)
-            ->minus($user->total_collective_saving_amount);
+            ->plus($user->total_income_amount);
 
         return moneyDisplay($budget);
     }
