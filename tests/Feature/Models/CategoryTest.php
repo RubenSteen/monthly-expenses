@@ -18,3 +18,7 @@ it('can create a category transaction', function () {
 
     expect($this->user->category->last()->name)->toBe($data['name']);
 });
+
+it('can retrieve the user linked to the category', function () {
+    expect($this->categories->first()->user->id)->toBe($this->user->id);
+});
