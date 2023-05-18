@@ -16,5 +16,4 @@ jobs:
           verboseMode: true
           testMode: true
           configPath: "pint.json"
-          pintVersion: 1.2.1
           onlyDirty: true
