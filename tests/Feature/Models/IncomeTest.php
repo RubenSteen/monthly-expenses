@@ -3,12 +3,6 @@
 use App\Models\Income;
 use App\Models\User;
 
-/*
-|--------------------------------------------------------------------------
-| Last Activity tests
-|--------------------------------------------------------------------------
-*/
-
 it('can create a income transaction', function () {
     $data = Income::factory()->make()->toArray();
 
