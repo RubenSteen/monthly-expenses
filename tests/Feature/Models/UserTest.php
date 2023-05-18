@@ -58,7 +58,9 @@ it('when a user gets deleted their piggybanks gets deleted', function () {
 
     $user_id = $user->id;
 
-    expect(PiggyBank::where('user_id', $user_id)->get())->toHaveCount(1);
+    PiggyBank::factory()->create(['user_id' => $user_id]);
+
+    expect(PiggyBank::where('user_id', $user_id)->get())->toHaveCount(2);
 
     $user->delete();
 
@@ -70,9 +72,9 @@ it('when a user gets deleted their income gets deleted', function () {
 
     $user_id = $user->id;
 
-    Income::factory()->create(['user_id' => $user_id]);
+    Income::factory()->count(2)->create(['user_id' => $user_id]);
 
-    expect(Income::where('user_id', $user_id)->get())->toHaveCount(1);
+    expect(Income::where('user_id', $user_id)->get())->toHaveCount(2);
 
     $user->delete();
 
