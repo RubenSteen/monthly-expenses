@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Income;
 use App\Models\PiggyBank;
 use App\Models\User;
 use Carbon\Carbon;
@@ -50,4 +51,30 @@ it('can retrieve a list of piggy banks', function () {
     }
 
     expect($user->piggyBanks)->toHaveCount(6);
+});
+
+it('when a user gets deleted their piggybanks gets deleted', function () {
+    $user = User::factory()->create();
+
+    $user_id = $user->id;
+
+    expect(PiggyBank::where('user_id', $user_id)->get())->toHaveCount(1);
+
+    $user->delete();
+
+    expect(PiggyBank::where('user_id', $user_id)->get())->toHaveCount(0);
+});
+
+it('when a user gets deleted their income gets deleted', function () {
+    $user = User::factory()->create();
+
+    $user_id = $user->id;
+
+    Income::factory()->create(['user_id' => $user_id]);
+
+    expect(Income::where('user_id', $user_id)->get())->toHaveCount(1);
+
+    $user->delete();
+
+    expect(Income::where('user_id', $user_id)->get())->toHaveCount(0);
 });
