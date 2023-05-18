@@ -15,9 +15,9 @@ trait PasswordValidationRules
     protected function passwordRules()
     {
         if (! App::environment('local')) {
-            return (new Password)->length(10)->requireUppercase()->requireNumeric()->requireSpecialCharacter();
+            return (new Password())->length(10)->requireUppercase()->requireNumeric()->requireSpecialCharacter();
         }
 
-        return ['required', 'string', new Password, 'confirmed'];
+        return ['required', 'string', new Password(), 'confirmed'];
     }
 }
