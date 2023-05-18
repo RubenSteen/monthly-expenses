@@ -52,10 +52,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'total_income_amount',
-        'total_expense_amount',
-        'total_saving_amount',
-        'total_collective_expense_amount',
-        'total_collective_saving_amount',
     ];
 
     /**
@@ -78,10 +74,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'total_income_amount' => Money::class,
-        'total_expense_amount' => Money::class,
-        'total_saving_amount' => Money::class,
-        'total_collective_expense_amount' => Money::class,
-        'total_collective_saving_amount' => Money::class,
     ];
 
     /**
@@ -122,32 +114,8 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Gets the users their expense transactions
      */
-    public function expense(): HasMany
+    public function category(): HasMany
     {
-        return $this->hasMany(Expense::class);
-    }
-
-    /**
-     * Gets the users their saving transactions
-     */
-    public function savings(): HasMany
-    {
-        return $this->hasMany(Saving::class);
-    }
-
-    /**
-     * Gets the users their collective saving transactions
-     */
-    public function collectiveSaving(): HasMany
-    {
-        return $this->hasMany(CollectiveSaving::class);
-    }
-
-    /**
-     * Gets the users their collective expense transactions
-     */
-    public function collectiveExpense(): HasMany
-    {
-        return $this->hasMany(CollectiveExpense::class);
+        return $this->hasMany(Category::class);
     }
 }
