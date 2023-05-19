@@ -7,7 +7,7 @@ beforeEach(function () {
     $this->user = User::factory()->create();
 });
 
-it('can create a category transaction', function () {
+it('can create a category', function () {
     $count = $this->user->category->count();
 
     $data = Category::factory()->make()->toArray();
