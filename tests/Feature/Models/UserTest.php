@@ -31,6 +31,12 @@ it('updates the last_activity record when a user makes a request', function () {
         ->toBe(0);
 });
 
+/*
+|--------------------------------------------------------------------------
+| Piggy Bank tests
+|--------------------------------------------------------------------------
+*/
+
 it('can create a piggy bank', function () {
     $data = PiggyBank::factory()->make()->toArray();
 
@@ -66,6 +72,12 @@ it('when a user gets deleted their piggybanks gets deleted', function () {
 
     expect(PiggyBank::where('user_id', $user_id)->get())->toHaveCount(0);
 });
+
+/*
+|--------------------------------------------------------------------------
+| Income tests
+|--------------------------------------------------------------------------
+*/
 
 it('when a user gets deleted their income gets deleted', function () {
     $user = User::factory()->create();
