@@ -66,8 +66,7 @@ it('cannot create a income transaction with a piggy bank that isnt theirs', func
 
     actingAs($this->user)
         ->post(route('income.store', $data))
-        ->assertStatus(302)
-        ->assertSessionHasErrors([$field => 'Dit is niet jou potje vriend']);
+        ->assertStatus(403);
 })->with([
     'to' => ['to_id'],
 ]);
@@ -119,7 +118,7 @@ it('cannot edit a income transaction that isnt theirs', function () {
 */
 
 test('validation tests while creating', function (string $field, mixed $value, string $rule) {
-    $data = Income::factory()->make([$field => $value])->toArray();
+    $data = Income::factory()->make([$field => $value, 'user_id' => $this->user->id])->toArray();
 
     actingAs($this->user)
         ->post(route('income.store', $data))
@@ -131,7 +130,7 @@ test('validation tests while creating', function (string $field, mixed $value, s
 ]);
 
 test('validation tests while creating amount cannot be null', function () {
-    $data = Income::factory()->make()->toArray();
+    $data = Income::factory()->make(['user_id' => $this->user->id])->toArray();
 
     // https://laracasts.com/discuss/channels/laravel/disabling-casts-when-using-factorymake?page=1&replyId=887987
     $data['amount'] = null;

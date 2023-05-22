@@ -21,7 +21,7 @@ class TransactionFactory extends Factory
         return [
             'name' => $this->faker->catchPhrase(),
             'category_id' => Category::factory(),
-            'amount' => 1000,
+            'amount' => rand(100, 30000),
             'from_id' => function (array $attributes) {
                 return PiggyBank::factory()->create(['user_id' => Category::find($attributes['category_id'])->user->id]);
             },

@@ -8,7 +8,9 @@ use function Pest\Laravel\actingAs;
 beforeEach(function () {
     $this->user = User::factory()->create();
 
-    $this->transactions = Transaction::factory()->count(10)->create(['from_id' => $this->user->piggyBanks->first(), 'category_id' => $this->user->category->first()]);
+    $this->category = $this->user->category->first();
+
+    Transaction::factory()->count(10)->create(['from_id' => $this->user->piggyBanks->first(), 'category_id' => $this->category->id]);
 });
 
 /*
@@ -23,38 +25,54 @@ it('can create a transaction', function () {
         'to_id' => $this->user->piggyBanks->first(),
     ])->toArray();
 
-    // https://laracasts.com/discuss/channels/laravel/disabling-casts-when-using-factorymake?page=1&replyId=887987
-    // $data = array_merge($data, [
-    //     'amount' => 1000,
-    // ]);
+    https://laracasts.com/discuss/channels/laravel/disabling-casts-when-using-factorymake?page=1&replyId=887987
+    $data['amount'] = $data['amount']->getMinorAmount()->toInt();
 
-    $count = $this->user->transaction->count();
+    $count = $this->category->transaction->count();
 
     actingAs($this->user)
-        ->post(route('transaction.store', $data))
+        ->post(route('transaction.store', $this->category), $data)
         ->assertStatus(302)
         ->assertSessionHas(['success' => 'Transactie aangemaakt']);
 
-    expect($this->user->fresh()->transaction)
+    expect($this->category->fresh()->transaction)
         ->toHaveCount(($count + 1));
 
-    expect($this->user->fresh()->transaction->last()->name)
+    expect($this->category->fresh()->transaction->last()->name)
         ->toBe($data['name']);
 });
 
-// it('cannot create a income transaction with a piggy bank that isnt theirs', function (string $field) {
-//     $otherUser = User::factory()->create();
-//     $otherPiggyBank = PiggyBank::factory()->create(['user_id' => $otherUser->id]);
+it('cannot create a transaction with a from piggy bank that isnt theirs', function (string $field) {
+    $otherUser = User::factory()->create();
+    $otherPiggyBank = PiggyBank::factory()->create(['user_id' => $otherUser]);
 
-//     $data = Income::factory()->make([$field => $otherPiggyBank->id, 'user_id' => $this->user->id])->toArray();
+    $data = Transaction::factory()->make([
+        $field => $otherPiggyBank,
+    ])->toArray();
 
-//     actingAs($this->user)
-//         ->post(route('income.store', $data))
-//         ->assertStatus(302)
-//         ->assertSessionHasErrors([$field => 'Dit is niet jou potje vriend']);
-// })->with([
-//     'to' => ['to_id'],
-// ]);
+    https://laracasts.com/discuss/channels/laravel/disabling-casts-when-using-factorymake?page=1&replyId=887987
+    $data['amount'] = $data['amount']->getMinorAmount()->toInt();
+
+    $count = $this->category->transaction->count();
+
+    actingAs($this->user)
+        ->post(route('transaction.store', $this->category), $data)
+        ->assertStatus(403);
+
+    expect($this->category->fresh()->transaction)
+        ->toHaveCount($count);
+
+    expect($this->category->fresh()->transaction->last()->name)
+        ->not
+        ->toBe($data['name']);
+})->with([
+    'to' => ['to_id'],
+    'from' => ['from_id'],
+]);
+
+todo('cannot create a transaction with a to piggy bank that isnt theirs');
+
+todo('cannot create a transaction with a category that isnt theirs');
 
 /*
 |--------------------------------------------------------------------------

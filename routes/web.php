@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\PiggyBankController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -36,10 +37,13 @@ Route::middleware([
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
     Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
     Route::put('/category/{category}', [CategoryController::class, 'update'])->name('category.update');
     Route::delete('/category/{category}', [CategoryController::class, 'delete'])->name('category.delete');
+
+    Route::post('/transaction/{category}', [TransactionController::class, 'store'])->name('transaction.store');
+    Route::put('/transaction/{category}/{transaction}', [TransactionController::class, 'update'])->name('transaction.update');
+    Route::delete('/transaction/{category}/{transaction}', [TransactionController::class, 'delete'])->name('transaction.delete');
 
     Route::get('/income', [IncomeController::class, 'index'])->name('income.index');
     Route::post('/income', [IncomeController::class, 'store'])->name('income.store');

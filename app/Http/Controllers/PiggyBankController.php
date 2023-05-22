@@ -46,7 +46,7 @@ class PiggyBankController extends Controller
     {
         // Cannot edit a piggy bank that isnt theirs
         if (Auth::user()->id !== $piggyBank->user_id) {
-            return Redirect::back()->with('error', 'Dit is niet jou potje vriend');
+            return abort(403);
         }
 
         $piggyBank->update($request->all());
@@ -58,7 +58,7 @@ class PiggyBankController extends Controller
     {
         // Cannot delete a piggy bank that isnt theirs
         if (Auth::user()->id !== $piggyBank->user_id) {
-            return Redirect::back()->with('error', 'Dit is niet jou potje vriend');
+            return abort(403);
         }
 
         $piggyBank->delete();
