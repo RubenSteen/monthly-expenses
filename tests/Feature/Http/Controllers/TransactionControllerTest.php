@@ -86,39 +86,38 @@ it('cannot create a transaction with a category that isnt theirs', function () {
 |--------------------------------------------------------------------------
 */
 
-// it('can edit a income transaction', function () {
-//     $modifiedIncome = Income::factory()->make([
-//         'user_id' => $this->user->id,
-//     ])->toArray();
+it('can edit a transaction', function () {
+    $data = modifiedTransaction($this->user);
+    $transaction = $this->category->transaction->first();
 
-//     // https://laracasts.com/discuss/channels/laravel/disabling-casts-when-using-factorymake?page=1&replyId=887987
-//     $modifiedIncome['amount'] = 1000;
+    actingAs($this->user)
+        ->put(route('transaction.update', $transaction), $data)
+        ->assertStatus(302)
+        ->assertSessionHas(['success' => 'Transactie aangepast']);
 
-//     actingAs($this->user)
-//         ->put(route('income.update', $this->income), $modifiedIncome)
-//         ->assertStatus(302)
-//         ->assertSessionHas(['success' => 'Inkomen aangepast']);
+    expect($transaction->fresh()->name)
+        ->toBe($data['name']);
+});
 
-//     expect($this->user->fresh()->income->last()->name)
-//         ->toBe($modifiedIncome['name']);
-// });
+it('cannot edit a transaction that isnt theirs', function () {
+    $this->otherUser = User::factory()->create();
 
-// it('cannot edit a income transaction that isnt theirs', function () {
-//     $otherUser = User::factory()->create();
+    $transaction = Transaction::factory()->create(['category_id' => $this->otherUser->category->first()]);
 
-//     $income = Income::factory()->create([
-//         'user_id' => $otherUser->id,
-//     ]);
+    expect($this->user->id)
+        ->not
+        ->toBe($transaction->category->user->id);
 
-//     $modifiedIncome = Income::factory()->make([
-//         'user_id' => $this->user->id,
-//     ])->toArray();
+    $data = modifiedTransaction($transaction->category->user);
 
-//     actingAs($this->user)
-//         ->put(route('income.update', $income), $modifiedIncome)
-//         ->assertStatus(302)
-//         ->assertSessionHas(['error' => 'Dit is niet jou inkomen vriend']);
-// });
+    actingAs($this->user)
+        ->put(route('transaction.update', $transaction), $data)
+        ->assertStatus(403);
+
+    expect($transaction->fresh()->name)
+        ->not
+        ->toBe($data['name']);
+});
 
 /*
 |--------------------------------------------------------------------------

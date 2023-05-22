@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Models\Category;
+use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -18,12 +19,12 @@ class TransactionController extends Controller
         return Redirect::back()->with(['success' => 'Transactie aangemaakt']);
     }
 
-    // public function update(UpdateTransactionRequest $request, Category $category): RedirectResponse
-    // {
-    //     $category->update($request->validated());
+    public function update(UpdateTransactionRequest $request, Transaction $transaction): RedirectResponse
+    {
+        $transaction->update($request->validated());
 
-    //     return Redirect::back()->with('success', 'Categorie aangepast');
-    // }
+        return Redirect::back()->with('success', 'Transactie aangepast');
+    }
 
     // public function delete(Category $category): RedirectResponse
     // {

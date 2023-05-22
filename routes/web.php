@@ -42,7 +42,7 @@ Route::middleware([
     Route::delete('/category/{category}', [CategoryController::class, 'delete'])->name('category.delete');
 
     Route::post('/transaction/{category}', [TransactionController::class, 'store'])->name('transaction.store');
-    Route::put('/transaction/{category}/{transaction}', [TransactionController::class, 'update'])->name('transaction.update');
+    Route::put('/transaction/{transaction}', [TransactionController::class, 'update'])->name('transaction.update');
     Route::delete('/transaction/{category}/{transaction}', [TransactionController::class, 'delete'])->name('transaction.delete');
 
     Route::get('/income', [IncomeController::class, 'index'])->name('income.index');

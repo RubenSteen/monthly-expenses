@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -46,4 +47,17 @@ expect()->extend('toBeOne', function () {
 function login($user = null)
 {
     return test()->actingAs($user ?? User::factory()->create());
+}
+
+function modifiedTransaction($user, $data = [])
+{
+    $data = Transaction::factory()->make([
+        'from_id' => $user->piggyBanks->random(),
+        'to_id' => $user->piggyBanks->random(),
+    ])->toArray();
+
+    // https://laracasts.com/discuss/channels/laravel/disabling-casts-when-using-factorymake?page=1&replyId=887987
+    $data['amount'] = $data['amount']->getMinorAmount()->toInt();
+
+    return $data;
 }
