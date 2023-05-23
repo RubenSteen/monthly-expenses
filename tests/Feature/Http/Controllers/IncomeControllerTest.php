@@ -66,7 +66,8 @@ it('cannot create a income transaction with a piggy bank that isnt theirs', func
 
     actingAs($this->user)
         ->post(route('income.store', $data))
-        ->assertStatus(403);
+        ->assertStatus(302)
+        ->assertSessionHasErrors([$field => 'Ongeldig potje']);
 })->with([
     'to' => ['to_id'],
 ]);

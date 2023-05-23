@@ -16,7 +16,7 @@ class PiggyBankIsFromUser implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (Auth::user()->piggyBanks()->where('id', $value)->doesntExist()) {
-            abort(403);
+            $fail('Ongeldig potje');
         }
     }
 }
