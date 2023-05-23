@@ -100,25 +100,25 @@ it('can edit a transaction', function () {
         ->toBe($data['name']);
 });
 
-// it('cannot edit a transaction that isnt theirs', function () {
-//     $this->otherUser = User::factory()->create();
+it('cannot edit a transaction that isnt theirs', function () {
+    $this->otherUser = User::factory()->create();
 
-//     $transaction = Transaction::factory()->create(['category_id' => $this->otherUser->category->first()]);
+    $transaction = Transaction::factory()->create(['category_id' => $this->otherUser->category->first()]);
 
-//     expect($this->user->id)
-//         ->not
-//         ->toBe($transaction->category->user->id);
+    expect($this->user->id)
+        ->not
+        ->toBe($transaction->getUser()->id);
 
-//     $data = modifiedTransaction($transaction->category->user);
+    $data = modifiedTransaction($transaction->getUser());
 
-//     actingAs($this->user)
-//         ->put(route('transaction.update', $transaction), $data)
-//         ->assertStatus(403);
+    actingAs($this->user)
+        ->put(route('transaction.update', $transaction), $data)
+        ->assertStatus(403);
 
-//     expect($transaction->fresh()->name)
-//         ->not
-//         ->toBe($data['name']);
-// });
+    expect($transaction->fresh()->name)
+        ->not
+        ->toBe($data['name']);
+});
 
 /*
 |--------------------------------------------------------------------------

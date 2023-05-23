@@ -42,4 +42,12 @@ class Transaction extends Model
     {
         return $this->belongsTo(PiggyBank::class);
     }
+
+    /**
+     * Gets the piggybank where the transaction is going to
+     */
+    public function getUser(): User
+    {
+        return $this->category->user;
+    }
 }
