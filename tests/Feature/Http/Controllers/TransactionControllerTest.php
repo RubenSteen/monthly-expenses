@@ -157,17 +157,17 @@ it('cannot edit a transaction that isnt theirs', function () {
 |--------------------------------------------------------------------------
 */
 
-// it('can delete a income transaction', function () {
-//     $count = $this->user->income->count();
+it('can delete a transaction', function () {
+    $count = $this->category->transaction->count();
 
-//     actingAs($this->user)
-//         ->delete(route('income.delete', $this->user->income->first()))
-//         ->assertStatus(302)
-//         ->assertSessionHas(['success' => 'Inkomen verwijderd']);
+    actingAs($this->user)
+        ->delete(route('transaction.delete', $this->category->transaction->random()))
+        ->assertStatus(302)
+        ->assertSessionHas(['success' => 'Transactie verwijderd']);
 
-//     expect($this->user->fresh()->income)
-//         ->toHaveCount(($count - 1));
-// });
+    expect($this->category->fresh()->transaction->count())
+        ->toHaveCount(($count - 1));
+});
 
 // it('cannot delete a income transaction that isnt theirs', function () {
 //     $otherUser = User::factory()->create();
