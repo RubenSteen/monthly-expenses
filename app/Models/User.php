@@ -129,4 +129,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Category::class);
     }
+
+    /**
+     * Gets the all the transactions that the user has over all categories
+     */
+    public function getTransactions()
+    {
+        return Transaction::whereIn('category_id', $this->category->pluck('id'))->get();
+    }
 }

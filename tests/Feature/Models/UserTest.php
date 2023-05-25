@@ -134,3 +134,26 @@ it('new user gets default categories', function (string $name) {
     'default 3' => ['Sparen'],
     'default 4' => ['Gezamelijk sparen'],
 ]);
+
+/*
+|--------------------------------------------------------------------------
+| Transaction tests
+|--------------------------------------------------------------------------
+*/
+
+it('can retrieve a list of all transactions', function () {
+    $totalCount = 0;
+
+    foreach ($this->user->category as $category) {
+        $category->transaction()->create(modifiedTransaction($this->user));
+
+        $count = $category->fresh()->transaction->count();
+
+        expect($count)->toBeGreaterThanOrEqual(1);
+
+        $totalCount = ($totalCount + $count);
+    }
+
+    expect($this->user->getTransactions())
+        ->toHaveCount($totalCount);
+});
