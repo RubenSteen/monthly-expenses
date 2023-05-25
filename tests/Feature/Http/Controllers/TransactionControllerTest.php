@@ -165,17 +165,23 @@ it('can delete a transaction', function () {
         ->assertStatus(302)
         ->assertSessionHas(['success' => 'Transactie verwijderd']);
 
-    expect($this->category->fresh()->transaction->count())
+    expect($this->category->fresh()->transaction)
         ->toHaveCount(($count - 1));
 });
 
-// it('cannot delete a income transaction that isnt theirs', function () {
-//     $otherUser = User::factory()->create();
+it('cannot delete a transaction that isnt theirs', function () {
+    $otherUser = User::factory()->create();
 
-//     $otherIncome = Income::factory()->create(['user_id' => $otherUser->id]);
+    $category = $otherUser->category->first();
 
-//     actingAs($this->user)
-//         ->delete(route('income.delete', $otherIncome))
-//         ->assertStatus(302)
-//         ->assertSessionHas(['error' => 'Dit is niet jou inkomen vriend']);
-// });
+    $otherTransaction = Transaction::factory()->create(['category_id' => $category]);
+
+    $count = $category->transaction->count();
+
+    actingAs($this->user)
+        ->delete(route('transaction.delete', $otherTransaction))
+        ->assertStatus(403);
+
+    expect($category->fresh()->transaction)
+        ->toHaveCount($count);
+});

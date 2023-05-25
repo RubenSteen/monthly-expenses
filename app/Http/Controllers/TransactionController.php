@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateTransactionRequest;
 use App\Models\Category;
 use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class TransactionController extends Controller
@@ -27,6 +28,10 @@ class TransactionController extends Controller
 
     public function delete(Transaction $transaction): RedirectResponse
     {
+        if (Auth::user()->id !== $transaction->getUser()->id) {
+            return abort(403);
+        }
+
         $transaction->delete();
 
         return Redirect::back()->with('success', 'Transactie verwijderd');
