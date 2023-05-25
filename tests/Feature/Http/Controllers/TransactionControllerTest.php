@@ -126,30 +126,37 @@ it('cannot edit a transaction that isnt theirs', function () {
 |--------------------------------------------------------------------------
 */
 
-// test('validation tests while creating', function (string $field, mixed $value, string $rule) {
-//     $data = Income::factory()->make([$field => $value])->toArray();
+test('validation tests while creating', function (string $field, mixed $value, string $rule) {
+    $data = modifiedTransaction($this->user, [$field => $value]);
 
-//     actingAs($this->user)
-//         ->post(route('income.store', $data))
-//         ->assertSessionHasErrors([
-//             $field => $rule,
-//         ]);
-// })->with([
-//     'name cannot be null' => ['name', null, 'The name field is required.'],
-// ]);
+    actingAs($this->user)
+        ->post(route('transaction.store', $this->category), $data)
+        ->assertSessionHasErrors([
+            $field => $rule,
+        ]);
+})->with([
+    'name cannot be null' => ['name', null, 'The name field is required.'],
+    'amount cannot be null' => ['amount', null, 'The amount field is required.'],
+]);
 
-// test('validation tests while creating amount cannot be null', function () {
-//     $data = Income::factory()->make()->toArray();
+test('validation tests while updating', function (string $field, mixed $value, string $rule) {
+    $transaction = $this->category->transaction->firstOrFail();
 
-//     // https://laracasts.com/discuss/channels/laravel/disabling-casts-when-using-factorymake?page=1&replyId=887987
-//     $data['amount'] = null;
+    $data = modifiedTransaction($this->user, [$field => $value]);
 
-//     actingAs($this->user)
-//         ->post(route('income.store', $data))
-//         ->assertSessionHasErrors([
-//             'amount' => 'The amount field is required.',
-//         ]);
-// });
+    actingAs($this->user)
+        ->put(route('transaction.update', $transaction), $data)
+        ->assertSessionHasErrors([
+            $field => $rule,
+        ]);
+
+    expect($transaction->fresh()->$field)
+        ->not
+        ->toBe($value);
+})->with([
+    'name cannot be null' => ['name', null, 'The name field is required.'],
+    'amount cannot be null' => ['amount', null, 'The amount field is required.'],
+]);
 
 /*
 |--------------------------------------------------------------------------
