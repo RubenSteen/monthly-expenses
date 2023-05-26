@@ -59,7 +59,9 @@ function modifiedTransaction($user, $array = [])
     $data = array_merge($data, $array);
 
     // https://laracasts.com/discuss/channels/laravel/disabling-casts-when-using-factorymake?page=1&replyId=887987
-    $data['amount'] = is_null($data['amount']) ? $data['amount'] : $data['amount']->getMinorAmount()->toInt();
+    if (! is_null($data['amount'])) {
+        $data['amount'] = $data['amount']->getMinorAmount()->toInt();
+    }
 
     return $data;
 }

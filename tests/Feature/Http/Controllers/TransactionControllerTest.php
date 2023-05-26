@@ -134,7 +134,9 @@ test('validation tests while creating', function (string $field, mixed $value, s
         ]);
 })->with([
     'name cannot be null' => ['name', null, 'The name field is required.'],
+    'name cannot be null' => ['name', '', 'The name field is required.'],
     'amount cannot be null' => ['amount', null, 'The amount field is required.'],
+    // 'amount cannot be null' => ['amount', '', 'The amount field is required.'],
 ]);
 
 test('validation tests while updating', function (string $field, mixed $value, string $rule) {
@@ -153,7 +155,9 @@ test('validation tests while updating', function (string $field, mixed $value, s
         ->toBe($value);
 })->with([
     'name cannot be null' => ['name', null, 'The name field is required.'],
+    'name cannot be null' => ['name', '', 'The name field is required.'],
     'amount cannot be null' => ['amount', null, 'The amount field is required.'],
+    // 'amount cannot be null' => ['amount', '', 'The amount field is required.'],
 ]);
 
 /*
