@@ -124,7 +124,7 @@ it('cannot edit a transaction that isnt theirs', function () {
 |--------------------------------------------------------------------------
 */
 
-test('validation tests while creating', function (string $field, mixed $value, string $rule) {
+test('validation tests while creating a transaction', function (string $field, mixed $value, string $rule) {
     $data = modifiedTransaction($this->user, [$field => $value]);
 
     actingAs($this->user)
@@ -134,12 +134,12 @@ test('validation tests while creating', function (string $field, mixed $value, s
         ]);
 })->with([
     'name cannot be null' => ['name', null, 'The name field is required.'],
-    'name cannot be null' => ['name', '', 'The name field is required.'],
+    'name cannot be a empty string' => ['name', '', 'The name field is required.'],
     'amount cannot be null' => ['amount', null, 'The amount field is required.'],
-    // 'amount cannot be null' => ['amount', '', 'The amount field is required.'],
+    // 'amount cannot be a empty string' => ['amount', '', 'The amount field is required.'],
 ]);
 
-test('validation tests while updating', function (string $field, mixed $value, string $rule) {
+test('validation tests while updating a transaction', function (string $field, mixed $value, string $rule) {
     $transaction = $this->category->transaction->firstOrFail();
 
     $data = modifiedTransaction($this->user, [$field => $value]);
@@ -155,9 +155,9 @@ test('validation tests while updating', function (string $field, mixed $value, s
         ->toBe($value);
 })->with([
     'name cannot be null' => ['name', null, 'The name field is required.'],
-    'name cannot be null' => ['name', '', 'The name field is required.'],
+    'name cannot be a empty string' => ['name', '', 'The name field is required.'],
     'amount cannot be null' => ['amount', null, 'The amount field is required.'],
-    // 'amount cannot be null' => ['amount', '', 'The amount field is required.'],
+    // 'amount cannot be a empty string' => ['amount', '', 'The amount field is required.'],
 ]);
 
 /*
