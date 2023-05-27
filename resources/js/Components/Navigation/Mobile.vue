@@ -109,6 +109,12 @@ const closeSidebar = () => {
                                                 <span class="truncate">{{ item.name }}</span>
                                                 </Link>
                                             </li>
+                                            <li>
+                                                <Link :href="route('category.create')"
+                                                    :class="[route().current('category.create') ? 'bg-gray-50 text-indigo-500' : 'text-gray-500 hover:text-indigo-600 hover:bg-gray-100', 'rounded-md p-2 text-xs font-semibold underline']">
+                                                <span class="truncate">Categorie aanmaken</span>
+                                                </Link>
+                                            </li>
                                         </ul>
                                     </li>
                                     <li class="mt-auto">

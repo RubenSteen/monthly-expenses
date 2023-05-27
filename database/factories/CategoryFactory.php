@@ -20,6 +20,7 @@ class CategoryFactory extends Factory
         return [
             'name' => $this->faker->catchPhrase(),
             'user_id' => User::factory(),
+            'amount' => rand(60000, 900000),
         ];
     }
 }

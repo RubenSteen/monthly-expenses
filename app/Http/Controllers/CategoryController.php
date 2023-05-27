@@ -12,6 +12,11 @@ use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
+    public function create()
+    {
+        return Inertia::render('Category/Create');
+    }
+
     public function store(StoreCategoryRequest $request): RedirectResponse
     {
         Auth::user()->category()->create($request->validated());
