@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 
@@ -38,7 +39,15 @@ class HandleInertiaRequests extends Middleware
                     'name' => Auth::user()->name,
                     'email' => Auth::user()->email,
                     'profile_photo_url' => Auth::user()->profilePhotoUrl,
-                    'categories' => Auth::user()->category()->select('id', 'name')->get(),
+                    'categories' => Auth::user()->category()->orderByDesc('created_at')->get()
+                        ->transform(function ($category) {
+                            return [
+                                'id' => $category->id,
+                                'name' => $category->name,
+                                'href' => route('category.show', $category),
+                                'current' => request()->is(Str::after(route('category.show', $category, false), '/')),
+                            ];
+                        }),
                 ],
             ],
             'flash' => [
