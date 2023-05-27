@@ -1,16 +1,15 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
 import {
-    Dialog,
     Menu,
     MenuButton,
     MenuItem,
     MenuItems,
-} from '@headlessui/vue'
+} from '@headlessui/vue';
 import {
     Bars3Icon,
     XMarkIcon,
-} from '@heroicons/vue/24/outline'
+} from '@heroicons/vue/24/outline';
 
 const emit = defineEmits(['openSidebar']);
 
@@ -22,7 +21,7 @@ const props = defineProps({
 
 const userNavigation = [
     { name: 'Profiel', href: route('profile.show'), current: route().current('profile.show') },
-]
+];
 
 const openSidebar = () => {
     emit('openSidebar');
