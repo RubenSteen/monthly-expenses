@@ -2,9 +2,9 @@
 import { ref } from 'vue'
 import { Head } from '@inertiajs/vue3';
 import Notification from '@/Components/Notification.vue';
-import TopNavigation from '@/Components/Navigation/TopNavigation.vue';
-import MobileNavigation from '@/Components/Navigation/MobileNavigation.vue';
-import SideNavigation from '@/Components/Navigation/SideNavigation.vue';
+import TopNavigation from '@/Components/Navigation/Top.vue';
+import MobileNavigation from '@/Components/Navigation/Mobile.vue';
+import SideNavigation from '@/Components/Navigation/Side.vue';
 
 defineProps({
   title: String,
