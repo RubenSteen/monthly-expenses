@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -16,6 +17,31 @@ class CategoryController extends Controller
         Auth::user()->category()->create($request->validated());
 
         return Redirect::back()->with(['success' => 'Categorie aangemaakt']);
+    }
+
+    public function show(Category $category)
+    {
+        if (Auth::user()->id !== $category->user_id) {
+            abort(403);
+        }
+
+        return Inertia::render('Category/Show', [
+            'category' => [
+                'id' => $category->id,
+                'name' => $category->name,
+                'transaction' => $category->transaction()->orderBy('amount')->get()
+                    ->transform(function ($category) {
+                        return [
+                            'id' => $category->id,
+                            'from' => $category->from->only(['id', 'name', 'description']),
+                            'to' => $category->to->only(['id', 'name', 'description']),
+                            'name' => $category->name,
+                            'amount' => money($category->amount),
+                        ];
+                    }),
+            ],
+            'piggyBanks' => Auth::user()->piggyBanks,
+        ]);
     }
 
     public function update(UpdateCategoryRequest $request, Category $category): RedirectResponse
