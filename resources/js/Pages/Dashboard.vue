@@ -109,16 +109,16 @@ const monthStats = [
           </div>
 
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div v-for="stat in monthStats" :key="stat.name"
+            <div v-for="category in $page.props.auth.user.categories" :key="category.name"
               class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
-              <div class="flex-shrink-0">
-                <component :is="stat.icon" class="h-10 w-10 shrink-0" aria-hidden="true" />
-              </div>
+              <!-- <div class="flex-shrink-0">
+                <component :is="category.icon" class="h-10 w-10 shrink-0" aria-hidden="true" />
+              </div> -->
               <div class="min-w-0 flex-1">
-                <Link :href="stat.link" class="focus:outline-none">
+                <Link :href="category.href" class="focus:outline-none">
                 <span class="absolute inset-0" aria-hidden="true" />
-                <p class="text-sm font-medium text-gray-900">{{ stat.name }}</p>
-                <p class="truncate text-sm text-gray-500">{{ stat.amount }}</p>
+                <p class="text-sm font-medium text-gray-900">{{ category.name }}</p>
+                <p class="truncate text-sm text-gray-500">{{ category.amount.valueDisplay }}</p>
                 </Link>
               </div>
             </div>

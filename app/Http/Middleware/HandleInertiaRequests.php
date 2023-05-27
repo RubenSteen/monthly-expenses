@@ -44,6 +44,7 @@ class HandleInertiaRequests extends Middleware
                             return [
                                 'id' => $category->id,
                                 'name' => $category->name,
+                                'amount' => money($category->amount),
                                 'href' => route('category.show', $category),
                                 'current' => request()->is(Str::after(route('category.show', $category, false), '/')),
                             ];
