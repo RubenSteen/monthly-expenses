@@ -37,6 +37,7 @@ Route::middleware([
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::get('/category', [CategoryController::class, 'create'])->name('category.create');
     Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
     Route::get('/category/{category}', [CategoryController::class, 'show'])->name('category.show');
     Route::put('/category/{category}', [CategoryController::class, 'update'])->name('category.update');
