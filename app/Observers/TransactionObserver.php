@@ -12,7 +12,7 @@ class TransactionObserver
      */
     public function created(Transaction $transaction): void
     {
-        CalculateCategoryAmountJob::dispatch($transaction);
+        CalculateCategoryAmountJob::dispatch($transaction->category);
     }
 
     /**
@@ -20,7 +20,7 @@ class TransactionObserver
      */
     public function updated(Transaction $transaction): void
     {
-        CalculateCategoryAmountJob::dispatch($transaction);
+        CalculateCategoryAmountJob::dispatch($transaction->category);
     }
 
     /**
@@ -28,7 +28,7 @@ class TransactionObserver
      */
     public function deleted(Transaction $transaction): void
     {
-        CalculateCategoryAmountJob::dispatch($transaction);
+        CalculateCategoryAmountJob::dispatch($transaction->category);
     }
 
     /**
@@ -36,7 +36,7 @@ class TransactionObserver
      */
     public function restored(Transaction $transaction): void
     {
-        CalculateCategoryAmountJob::dispatch($transaction);
+        CalculateCategoryAmountJob::dispatch($transaction->category);
     }
 
     /**
@@ -44,6 +44,6 @@ class TransactionObserver
      */
     public function forceDeleted(Transaction $transaction): void
     {
-        CalculateCategoryAmountJob::dispatch($transaction);
+        CalculateCategoryAmountJob::dispatch($transaction->category);
     }
 }
