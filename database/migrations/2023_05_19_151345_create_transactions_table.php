@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('from_id')->constrained(table: 'piggy_banks')->cascadeOnDelete();
             $table->foreignId('to_id')->constrained(table: 'piggy_banks')->cascadeOnDelete();
             $table->string('name');
-            $table->integer('amount');
+            $table->string('amount');
             $table->timestamps();
         });
     }
