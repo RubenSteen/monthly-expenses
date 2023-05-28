@@ -47,6 +47,10 @@ if (! function_exists('calculateLeftoverBudget')) {
         $budget = Money::of(0, 'EUR')
             ->plus($user->total_income_amount);
 
+        foreach ($user->category as $category) {
+            $budget = $budget->minus($category->amount);
+        }
+
         return moneyDisplay($budget);
     }
 }

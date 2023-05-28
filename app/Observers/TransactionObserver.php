@@ -20,7 +20,10 @@ class TransactionObserver
      */
     public function updated(Transaction $transaction): void
     {
-        CalculateCategoryAmountJob::dispatch($transaction->category);
+        // Only run the job if the amount value changed
+        if ($transaction->amount->getMinorAmount()->toInt() !== $transaction->getOriginal('amount')->getMinorAmount()->toInt()) {
+            CalculateCategoryAmountJob::dispatch($transaction->category);
+        }
     }
 
     /**
