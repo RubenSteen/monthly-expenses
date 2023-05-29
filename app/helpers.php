@@ -26,7 +26,7 @@ if (! function_exists('correctAmount')) {
     function correctAmount($amount)
     {
         if (preg_match('/(,\d\d)$/', $amount) > 0) {
-
+            $amount = $amount;
         } elseif (preg_match('/(,\d)$/', $amount) > 0) {
             $amount .= '0';
         } else {

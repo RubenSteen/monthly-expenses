@@ -14,14 +14,14 @@ class TransactionController extends Controller
 {
     public function store(StoreTransactionRequest $request, Category $category): RedirectResponse
     {
-        $category->transaction()->create($request->validated());
+        $category->transaction()->create(array_merge($request->validated(), correctAmount($request->validated()['amount'])));
 
         return Redirect::back()->with(['success' => 'Transactie aangemaakt']);
     }
 
     public function update(UpdateTransactionRequest $request, Transaction $transaction): RedirectResponse
     {
-        $transaction->update($request->validated());
+        $transaction->update(array_merge($request->validated(), correctAmount($request->validated()['amount'])));
 
         return Redirect::back()->with('success', 'Transactie aangepast');
     }
