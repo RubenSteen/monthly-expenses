@@ -72,8 +72,7 @@ it('cannot edit a piggy bank that isnt theirs', function () {
 
     actingAs($this->user)
         ->put(route('piggy-bank.update', $piggyBank), $updatedPiggyBank)
-        ->assertStatus(302)
-        ->assertSessionHas(['error' => 'Dit is niet jou potje vriend']);
+        ->assertStatus(403);
 
     expect($piggyBank->fresh()->name)
         ->toBe($piggyBank->name);
@@ -136,6 +135,5 @@ it('cannot delete a piggy bank that isnt theirs', function () {
 
     actingAs($this->user)
         ->delete(route('piggy-bank.delete', $otherPiggyBank))
-        ->assertStatus(302)
-        ->assertSessionHas(['error' => 'Dit is niet jou potje vriend']);
+        ->assertStatus(403);
 });

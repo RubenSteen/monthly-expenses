@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Jobs\CalculateTransactionTotalAmount;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,5 +17,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TestUserSeeder::class,
         ]);
+
+        // Correcting the income and transaction data once all users, income and transactions are created
+        foreach (User::all() as $user) {
+            CalculateTransactionTotalAmount::dispatch($user->income);
+        }
     }
 }

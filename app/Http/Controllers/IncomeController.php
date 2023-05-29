@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreIncomeRequest;
-use App\Jobs\CalculateTransactionTotalAmount;
 use App\Models\Income;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -36,8 +35,6 @@ class IncomeController extends Controller
     {
         Auth::user()->income()->create($request->validated(), correctAmount($request->validated()['amount']));
 
-        CalculateTransactionTotalAmount::dispatch(Auth::user()->income);
-
         return Redirect::back()->with(['success' => 'Inkomen aangemaakt']);
     }
 
@@ -50,8 +47,6 @@ class IncomeController extends Controller
 
         $income->update(array_merge($request->validated(), correctAmount($request->validated()['amount'])));
 
-        CalculateTransactionTotalAmount::dispatch(Auth::user()->income);
-
         return Redirect::back()->with('success', 'Inkomen aangepast');
     }
 
@@ -63,8 +58,6 @@ class IncomeController extends Controller
         }
 
         $income->delete();
-
-        CalculateTransactionTotalAmount::dispatch($income->all(), $income->user, $income->getTotalField());
 
         return Redirect::back()->with('success', 'Inkomen verwijderd');
     }

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('collective_savings', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->index();
-            $table->foreignId('from_id')->index();
-            $table->foreignId('to_id')->index();
+            $table->foreignId('category_id')->constrained()->restrictOnDelete();
+            $table->foreignId('from_id')->constrained(table: 'piggy_banks')->restrictOnDelete();
+            $table->foreignId('to_id')->constrained(table: 'piggy_banks')->restrictOnDelete();
             $table->string('name');
-            $table->integer('amount');
+            $table->string('amount');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('collective_savings');
+        Schema::dropIfExists('transactions');
     }
 };

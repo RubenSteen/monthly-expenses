@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\PiggyBank;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Saving>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Transaction>
  */
-class SavingFactory extends Factory
+class TransactionFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,16 +18,15 @@ class SavingFactory extends Factory
      */
     public function definition(): array
     {
-
         return [
             'name' => $this->faker->catchPhrase(),
-            'user_id' => User::factory(),
-            'amount' => 1000,
+            'category_id' => Category::factory(),
+            'amount' => rand(100, 30000),
             'from_id' => function (array $attributes) {
-                return PiggyBank::factory()->create(['user_id' => $attributes['user_id']]);
+                return PiggyBank::factory()->create(['user_id' => Category::find($attributes['category_id'])->user->id]);
             },
             'to_id' => function (array $attributes) {
-                return PiggyBank::factory()->create(['user_id' => $attributes['user_id']]);
+                return PiggyBank::factory()->create(['user_id' => Category::find($attributes['category_id'])->user->id]);
             },
         ];
     }
