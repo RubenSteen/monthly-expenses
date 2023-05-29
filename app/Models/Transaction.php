@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Saving extends Model
+class Transaction extends Model
 {
     use HasFactory;
 
@@ -22,20 +22,15 @@ class Saving extends Model
         'amount' => Money::class,
     ];
 
-    public function user(): BelongsTo
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function getTotalField(): string
-    {
-        return 'total_saving_amount';
+        return $this->belongsTo(Category::class);
     }
 
     /**
-     * Gets the piggybank where the transaction is coming from
+     * Gets the piggybank where the transaction is from
      */
-    public function from()
+    public function from(): BelongsTo
     {
         return $this->belongsTo(PiggyBank::class);
     }
@@ -46,5 +41,13 @@ class Saving extends Model
     public function to(): BelongsTo
     {
         return $this->belongsTo(PiggyBank::class);
+    }
+
+    /**
+     * Gets the piggybank where the transaction is going to
+     */
+    public function getUser(): User
+    {
+        return $this->category->user;
     }
 }

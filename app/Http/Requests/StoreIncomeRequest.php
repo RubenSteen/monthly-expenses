@@ -25,7 +25,7 @@ class StoreIncomeRequest extends FormRequest
         return [
             'name' => 'required',
             'amount' => 'required',
-            'to_id' => ['required', new PiggyBankIsFromUser],
+            'to_id' => ['required', new PiggyBankIsFromUser()],
         ];
     }
 }

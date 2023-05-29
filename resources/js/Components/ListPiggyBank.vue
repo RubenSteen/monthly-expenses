@@ -46,10 +46,10 @@ const pressedEdit = (index) => {
         </button>
 
         <ul v-else role="list" class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8">
-            <li v-for="(client, index) in piggyBanks" :key="index"
+            <li v-for="(piggyBank, index) in piggyBanks" :key="index"
                 class="overflow-hidden rounded-xl border border-gray-200">
                 <div class="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
-                    <div class="text-sm font-medium leading-6 text-gray-900">{{ client.name }}</div>
+                    <div class="text-sm font-medium leading-6 text-gray-900">{{ piggyBank.name }}</div>
                     <Menu as="div" class="relative ml-auto">
                         <MenuButton class="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
                             <span class="sr-only">Open options</span>
@@ -65,12 +65,12 @@ const pressedEdit = (index) => {
                                 <MenuItem v-slot="{ active }">
                                 <a href="#"
                                     :class="[active ? 'bg-gray-50' : '', 'block px-3 py-1 text-sm leading-6 text-gray-900']">Inzicht<span
-                                        class="sr-only">, {{ client.name }}</span></a>
+                                        class="sr-only">, {{ piggyBank.name }}</span></a>
                                 </MenuItem>
                                 <MenuItem v-slot="{ active }">
                                 <a @click="pressedEdit(index)"
                                     :class="[active ? 'bg-gray-50' : '', 'block px-3 py-1 text-sm leading-6 text-gray-900']">Bewerk<span
-                                        class="sr-only">, {{ client.name }}</span></a>
+                                        class="sr-only">, {{ piggyBank.name }}</span></a>
                                 </MenuItem>
                             </MenuItems>
                         </transition>
@@ -80,13 +80,13 @@ const pressedEdit = (index) => {
                     <div class="flex justify-between gap-x-4 py-3">
                         <dt class="text-gray-500">Bedrag</dt>
                         <dd class="flex items-start gap-x-2">
-                            <div class="font-medium text-gray-900">{{ client.amount }}</div>
+                            <div class="font-medium text-gray-900">{{ piggyBank.amount.valueDisplay }}</div>
                         </dd>
                     </div>
                     <div class="flex justify-between gap-x-4 py-3">
                         <dt class="text-gray-500">Transacties</dt>
                         <dd class="flex items-start gap-x-2">
-                            <div class="font-medium text-gray-900">{{ client.transactions_count }}</div>
+                            <div class="font-medium text-gray-900">{{ piggyBank.transactions_count }}</div>
                         </dd>
                     </div>
                 </dl>

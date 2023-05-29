@@ -9,6 +9,7 @@ import {
   CreditCardIcon,
   CurrencyEuroIcon,
   RectangleStackIcon,
+  ClipboardDocumentIcon,
 } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
@@ -30,30 +31,30 @@ const incomeStats = {
 
 
 const monthStats = [
-  {
-    name: 'Uitgaven',
-    amount: props.totalStats.expense,
-    icon: BanknotesIcon,
-    link: route('expense.index'),
-  },
-  {
-    name: 'Gezamelijke Uitgaven',
-    amount: props.totalStats.collectiveExpense,
-    icon: CreditCardIcon,
-    link: route('collective-expense.index'),
-  },
-  {
-    name: 'Sparen',
-    amount: props.totalStats.saving,
-    icon: WalletIcon,
-    link: route('saving.index'),
-  },
-  {
-    name: 'Gezamelijk Sparen',
-    amount: props.totalStats.collectiveSaving,
-    icon: HomeModernIcon,
-    link: route('collective-saving.index'),
-  },
+  // {
+  //   name: 'Uitgaven',
+  //   amount: props.totalStats.expense,
+  //   icon: BanknotesIcon,
+  //   link: route('expense.index'),
+  // },
+  // {
+  //   name: 'Gezamelijke Uitgaven',
+  //   amount: props.totalStats.collectiveExpense,
+  //   icon: CreditCardIcon,
+  //   link: route('collective-expense.index'),
+  // },
+  // {
+  //   name: 'Sparen',
+  //   amount: props.totalStats.saving,
+  //   icon: WalletIcon,
+  //   link: route('saving.index'),
+  // },
+  // {
+  //   name: 'Gezamelijk Sparen',
+  //   amount: props.totalStats.collectiveSaving,
+  //   icon: HomeModernIcon,
+  //   link: route('collective-saving.index'),
+  // },
 ]
 </script>
 
@@ -108,17 +109,23 @@ const monthStats = [
             </div>
           </div>
 
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div v-for="stat in monthStats" :key="stat.name"
+          <Link v-if="$page.props.auth.user.categories.length < 1" type="button" :href="route('category.create')"
+            class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          <component :is="ClipboardDocumentIcon" class="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" />
+          <span class="mt-2 block text-sm font-semibold text-gray-900">Geen categorieën gevonden</span>
+          </Link>
+
+          <div v-if="$page.props.auth.user.categories.length > 0" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div v-for="category in $page.props.auth.user.categories" :key="category.name"
               class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
-              <div class="flex-shrink-0">
-                <component :is="stat.icon" class="h-10 w-10 shrink-0" aria-hidden="true" />
-              </div>
+              <!-- <div class="flex-shrink-0">
+                <component :is="category.icon" class="h-10 w-10 shrink-0" aria-hidden="true" />
+              </div> -->
               <div class="min-w-0 flex-1">
-                <Link :href="stat.link" class="focus:outline-none">
+                <Link :href="category.href" class="focus:outline-none">
                 <span class="absolute inset-0" aria-hidden="true" />
-                <p class="text-sm font-medium text-gray-900">{{ stat.name }}</p>
-                <p class="truncate text-sm text-gray-500">{{ stat.amount }}</p>
+                <p class="text-sm font-medium text-gray-900">{{ category.name }}</p>
+                <p class="truncate text-sm text-gray-500">{{ category.amount.valueDisplay }}</p>
                 </Link>
               </div>
             </div>

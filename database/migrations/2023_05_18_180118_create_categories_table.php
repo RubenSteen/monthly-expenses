@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('savings', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->index();
-            $table->foreignId('from_id')->index();
-            $table->foreignId('to_id')->index();
+            $table->foreignId('user_id')->constrained()->restrictOnDelete();
             $table->string('name');
-            $table->integer('amount');
+            $table->string('amount')->default(0);
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('expenses');
+        Schema::dropIfExists('categories');
     }
 };

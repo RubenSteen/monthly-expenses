@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePiggyBankRequest;
 use App\Models\PiggyBank;
+use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -23,8 +24,8 @@ class PiggyBankController extends Controller
                     'id' => $piggyBank->id,
                     'name' => $piggyBank->name,
                     'description' => $piggyBank->description,
-                    'amount' => '€25,57',
-                    'transactions_count' => 2,
+                    'amount' => money($piggyBank->amount),
+                    'transactions_count' => Transaction::where('from_id', $piggyBank->id)->orWhere('to_id', $piggyBank->id)->count(),
                 ]),
         ]);
     }
@@ -46,7 +47,7 @@ class PiggyBankController extends Controller
     {
         // Cannot edit a piggy bank that isnt theirs
         if (Auth::user()->id !== $piggyBank->user_id) {
-            return Redirect::back()->with('error', 'Dit is niet jou potje vriend');
+            return abort(403);
         }
 
         $piggyBank->update($request->all());
@@ -58,7 +59,7 @@ class PiggyBankController extends Controller
     {
         // Cannot delete a piggy bank that isnt theirs
         if (Auth::user()->id !== $piggyBank->user_id) {
-            return Redirect::back()->with('error', 'Dit is niet jou potje vriend');
+            return abort(403);
         }
 
         $piggyBank->delete();

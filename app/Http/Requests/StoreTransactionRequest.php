@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Rules\PiggyBankIsFromUser;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreTransactionRequest extends FormRequest
 {
@@ -12,6 +13,10 @@ class StoreTransactionRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if (Auth::user()->id !== $this->category->user_id) {
+            return false;
+        }
+
         return true;
     }
 
@@ -25,8 +30,8 @@ class StoreTransactionRequest extends FormRequest
         return [
             'name' => 'required',
             'amount' => 'required',
-            'to_id' => ['required', new PiggyBankIsFromUser],
-            'from_id' => ['required', new PiggyBankIsFromUser],
+            'to_id' => ['required', new PiggyBankIsFromUser()],
+            'from_id' => ['required', new PiggyBankIsFromUser()],
         ];
     }
 }
