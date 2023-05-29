@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Jobs\CalculatePiggyBankAmountJob;
+use App\Jobs\CalculateUserTotalIncomeAmountJob;
 use App\Models\Income;
 
 class IncomeObserver
@@ -12,6 +13,7 @@ class IncomeObserver
      */
     public function created(Income $income): void
     {
+        CalculateUserTotalIncomeAmountJob::dispatch($income->user);
         CalculatePiggyBankAmountJob::dispatch($income->user);
     }
 
@@ -20,6 +22,7 @@ class IncomeObserver
      */
     public function updated(Income $income): void
     {
+        CalculateUserTotalIncomeAmountJob::dispatch($income->user);
         CalculatePiggyBankAmountJob::dispatch($income->user);
     }
 
@@ -28,6 +31,7 @@ class IncomeObserver
      */
     public function deleted(Income $income): void
     {
+        CalculateUserTotalIncomeAmountJob::dispatch($income->user);
         CalculatePiggyBankAmountJob::dispatch($income->user);
     }
 
@@ -36,6 +40,7 @@ class IncomeObserver
      */
     public function restored(Income $income): void
     {
+        CalculateUserTotalIncomeAmountJob::dispatch($income->user);
         CalculatePiggyBankAmountJob::dispatch($income->user);
     }
 
@@ -44,6 +49,7 @@ class IncomeObserver
      */
     public function forceDeleted(Income $income): void
     {
+        CalculateUserTotalIncomeAmountJob::dispatch($income->user);
         CalculatePiggyBankAmountJob::dispatch($income->user);
     }
 }
