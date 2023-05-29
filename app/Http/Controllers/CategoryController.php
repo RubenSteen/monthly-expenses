@@ -19,9 +19,9 @@ class CategoryController extends Controller
 
     public function store(StoreCategoryRequest $request): RedirectResponse
     {
-        Auth::user()->category()->create($request->validated());
+        $category = Auth::user()->category()->create($request->validated());
 
-        return Redirect::back()->with(['success' => 'Categorie aangemaakt']);
+        return Redirect::route('category.show', $category->id)->with(['success' => 'Categorie aangemaakt']);
     }
 
     public function show(Category $category)

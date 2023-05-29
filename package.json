@@ -20,6 +20,8 @@
     },
     "dependencies": {
         "@headlessui/vue": "^1.7.13",
-        "@heroicons/vue": "^2.0.17"
+        "@heroicons/vue": "^2.0.17",
+        "laravel-precognition-vue": "^0.2.1",
+        "laravel-precognition-vue-inertia": "^0.2.1"
     }
 }
