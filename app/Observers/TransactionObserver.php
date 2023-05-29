@@ -27,10 +27,7 @@ class TransactionObserver
             CalculateCategoryAmountJob::dispatch($transaction->category);
         }
 
-        // Only run the job if the to_id or from_id value changed
-        if ($transaction->to_id !== $transaction->getOriginal('to_id') || $transaction->from_id !== $transaction->getOriginal('from_id')) {
-            CalculatePiggyBankAmountJob::dispatch($transaction);
-        }
+        CalculatePiggyBankAmountJob::dispatch($transaction);
     }
 
     /**

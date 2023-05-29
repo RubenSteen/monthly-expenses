@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Transaction;
 use Brick\Money\Money;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,9 +14,7 @@ class CalculatePiggyBankAmountJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $from;
-
-    public $to;
+    public $piggyBanks;
 
     /**
      * Create a new job instance.
@@ -24,9 +23,7 @@ class CalculatePiggyBankAmountJob implements ShouldQueue
     {
         $this->transaction = $transaction;
 
-        $this->from = $transaction->from;
-
-        $this->to = $transaction->to;
+        $this->piggyBanks = $transaction->category->user->piggyBanks;
     }
 
     /**
@@ -34,29 +31,21 @@ class CalculatePiggyBankAmountJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $this->updateAmount($this->from, 'from_id');
+        foreach ($this->piggyBanks as $piggyBank) {
+            $budget = Money::of(0, 'EUR');
 
-        $this->updateAmount($this->to, 'to_id');
-    }
+            foreach (Transaction::where('from_id', $piggyBank->id)->orWhere('to_id', $piggyBank->id)->get() as $transaction) {
+                $method = 'minus';
 
-    /**
-     * Gets all the transactions and calculate the total amount.
-     */
-    public function updateAmount($model, $field): void
-    {
-        $method = 'minus';
+                if ($transaction->to_id == $piggyBank->id) {
+                    $method = 'plus';
+                }
 
-        if ($field == 'to_id') {
-            $method = 'plus';
+                $budget = $budget->$method($transaction->amount);
+            }
+
+            $piggyBank->amount = $budget;
+            $piggyBank->update();
         }
-
-        $budget = Money::of(0, 'EUR');
-
-        foreach ($model->getTransactions($field)->pluck('amount') as $amount) {
-            $budget = $budget->$method($amount);
-        }
-
-        $model->amount = $budget;
-        $model->update();
     }
 }
