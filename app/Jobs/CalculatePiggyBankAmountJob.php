@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Income;
 use App\Models\Transaction;
 use Brick\Money\Money;
 use Illuminate\Bus\Queueable;
@@ -14,16 +15,12 @@ class CalculatePiggyBankAmountJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $piggyBanks;
-
     /**
      * Create a new job instance.
      */
-    public function __construct(public $transaction)
+    public function __construct(public $user)
     {
-        $this->transaction = $transaction;
-
-        $this->piggyBanks = $transaction->category->user->piggyBanks;
+        $this->user = $user;
     }
 
     /**
@@ -31,8 +28,12 @@ class CalculatePiggyBankAmountJob implements ShouldQueue
      */
     public function handle(): void
     {
-        foreach ($this->piggyBanks as $piggyBank) {
+        foreach ($this->user->piggyBanks as $piggyBank) {
             $budget = Money::of(0, 'EUR');
+
+            foreach (Income::where('to_id', $piggyBank->id)->get() as $transaction) {
+                $budget = $budget->plus($transaction->amount);
+            }
 
             foreach (Transaction::where('from_id', $piggyBank->id)->orWhere('to_id', $piggyBank->id)->get() as $transaction) {
                 $method = 'minus';

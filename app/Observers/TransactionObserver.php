@@ -14,7 +14,7 @@ class TransactionObserver
     public function created(Transaction $transaction): void
     {
         CalculateCategoryAmountJob::dispatch($transaction->category);
-        CalculatePiggyBankAmountJob::dispatch($transaction);
+        CalculatePiggyBankAmountJob::dispatch($transaction->category->user);
     }
 
     /**
@@ -27,7 +27,7 @@ class TransactionObserver
             CalculateCategoryAmountJob::dispatch($transaction->category);
         }
 
-        CalculatePiggyBankAmountJob::dispatch($transaction);
+        CalculatePiggyBankAmountJob::dispatch($transaction->category->user);
     }
 
     /**
@@ -36,7 +36,7 @@ class TransactionObserver
     public function deleted(Transaction $transaction): void
     {
         CalculateCategoryAmountJob::dispatch($transaction->category);
-        CalculatePiggyBankAmountJob::dispatch($transaction);
+        CalculatePiggyBankAmountJob::dispatch($transaction->category->user);
     }
 
     /**
@@ -45,7 +45,7 @@ class TransactionObserver
     public function restored(Transaction $transaction): void
     {
         CalculateCategoryAmountJob::dispatch($transaction->category);
-        CalculatePiggyBankAmountJob::dispatch($transaction);
+        CalculatePiggyBankAmountJob::dispatch($transaction->category->user);
     }
 
     /**
