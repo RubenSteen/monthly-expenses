@@ -1,5 +1,6 @@
 <script setup>
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import DangerButton from '@/Components/DangerButton.vue';
 import { ClipboardDocumentIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
@@ -9,7 +10,7 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(['pressedButton', 'pressedEdit']);
+const emit = defineEmits(['pressedButton', 'pressedEdit', 'pressedDeleteCategory']);
 
 const pressedButton = () => {
     emit('pressedButton');
@@ -17,6 +18,10 @@ const pressedButton = () => {
 
 const pressedEdit = (index) => {
     emit('pressedEdit', index);
+};
+
+const deleteCategory = () => {
+    emit('pressedDeleteCategory');
 };
 </script>
 
@@ -31,8 +36,9 @@ const pressedEdit = (index) => {
                     Registreer hier je uitgaven
                 </p>
             </div>
-            <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                <PrimaryButton @click="pressedButton">Nieuw</PrimaryButton>
+            <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex">
+                <DangerButton @click="deleteCategory" class="mr-2">Verwijder Categorie</DangerButton>
+                <PrimaryButton @click="pressedButton">Nieuwe transactie</PrimaryButton>
             </div>
         </div>
 

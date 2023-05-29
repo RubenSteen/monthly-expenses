@@ -64,6 +64,6 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        return Redirect::back()->with('success', 'Categorie verwijderd');
+        return Redirect::route('dashboard')->with('success', 'Categorie verwijderd');
     }
 }

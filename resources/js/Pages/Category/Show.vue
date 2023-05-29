@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue';
 import CreateAndUpdateModal from '@/Pages/Category/Partials/CreateAndUpdateModal.vue';
 import List from '@/Pages/Category/Partials/List.vue';
@@ -30,6 +31,10 @@ const editTransaction = (index) => {
     selectedEdit.value = props.category.transaction[index];
     openModal();
 };
+
+const deleteCategory = () => {
+    router.delete(route('category.delete', props.category))
+};
 </script>
 
 <template>
@@ -42,7 +47,8 @@ const editTransaction = (index) => {
             <div class="overflow-hidden bg-white shadow mt-4">
                 <div class="px-4 py-5 sm:p-6">
 
-                    <List :data="category.transaction" @pressedButton="newTransaction" @pressedEdit="editTransaction">
+                    <List :data="category.transaction" @pressedButton="newTransaction" @pressedEdit="editTransaction"
+                        @pressedDeleteCategory="deleteCategory">
                         <template #title>
                             Categorie: {{ category.name }}
                         </template>
