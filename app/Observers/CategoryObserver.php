@@ -11,6 +11,8 @@ class CategoryObserver
      */
     public function deleting(Category $category): void
     {
-        $category->transaction()->delete();
+        foreach ($category->transaction as $object) {
+            $object->delete();
+        }
     }
 }
