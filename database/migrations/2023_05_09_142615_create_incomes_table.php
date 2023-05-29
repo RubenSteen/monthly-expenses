@@ -13,8 +13,8 @@ return new class() extends Migration
     {
         Schema::create('incomes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('to_id')->constrained(table: 'piggy_banks')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->restrictOnDelete();
+            $table->foreignId('to_id')->constrained(table: 'piggy_banks')->restrictOnDelete();
             $table->string('name');
             $table->integer('amount');
             $table->timestamps();

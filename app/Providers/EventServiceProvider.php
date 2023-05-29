@@ -2,9 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
 use App\Models\Income;
+use App\Models\PiggyBank;
 use App\Models\Transaction;
+use App\Observers\CategoryObserver;
 use App\Observers\IncomeObserver;
+use App\Observers\PiggyBankObserver;
 use App\Observers\TransactionObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -29,7 +33,9 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        PiggyBank::observe(PiggyBankObserver::class);
         Income::observe(IncomeObserver::class);
+        Category::observe(CategoryObserver::class);
         Transaction::observe(TransactionObserver::class);
     }
 
