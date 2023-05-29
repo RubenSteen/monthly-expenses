@@ -33,7 +33,7 @@ class IncomeController extends Controller
 
     public function store(StoreIncomeRequest $request): RedirectResponse
     {
-        Auth::user()->income()->create($request->validated(), correctAmount($request->validated()['amount']));
+        Auth::user()->income()->create(array_merge($request->validated(), correctAmount($request->validated()['amount'])));
 
         return Redirect::back()->with(['success' => 'Inkomen aangemaakt']);
     }
