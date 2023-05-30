@@ -15,6 +15,7 @@ class TestUserSeeder extends Seeder
     {
         $user = User::factory()
             ->superAdmin()
+            ->admin()
             ->withPersonalTeam()
             ->create([
                 'name' => 'Test User',

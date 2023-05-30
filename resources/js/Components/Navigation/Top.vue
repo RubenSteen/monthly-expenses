@@ -75,6 +75,12 @@ const openSidebar = () => {
                                 {{
                                     link.name }} </Link>
                                 </MenuItem>
+                                <MenuItem v-if="$page.props.auth.user.is_admin" v-slot="{ active }">
+                                <Link :href="route('admin.user.index')"
+                                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
+                                Admin Users
+                                </Link>
+                                </MenuItem>
                                 <MenuItem v-slot="{ active }">
                                 <Link :href="route('logout')" method="post" as="button" type="button"
                                     :class="[active ? 'bg-gray-100' : '', 'block w-full text-left px-4 py-2 text-sm text-gray-700']">

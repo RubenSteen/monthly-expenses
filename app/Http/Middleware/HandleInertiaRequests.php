@@ -39,6 +39,7 @@ class HandleInertiaRequests extends Middleware
                     'name' => Auth::user()->name,
                     'email' => Auth::user()->email,
                     'profile_photo_url' => Auth::user()->profilePhotoUrl,
+                    'is_admin' => Auth::user()->isAdmin(),
                     'categories' => Auth::user()->category()->orderByDesc('created_at')->get()
                         ->transform(function ($category) {
                             return [
