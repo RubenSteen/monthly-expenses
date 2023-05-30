@@ -34,7 +34,7 @@ class CategoryController extends Controller
             'category' => [
                 'id' => $category->id,
                 'name' => $category->name,
-                'transaction' => $category->transaction()->orderBy('amount')->get()
+                'transaction' => $category->transaction()->orderByDesc('amount')->get()
                     ->transform(function ($category) {
                         return [
                             'id' => $category->id,
