@@ -14,7 +14,7 @@ class IncomeController extends Controller
     public function index()
     {
         return Inertia::render('Income', [
-            'transactions' => Auth::user()->income()
+            'transactions' => Auth::user()->income()->orderByDesc('amount')
                 ->get()
                 ->transform(fn ($transaction) => [
                     'id' => $transaction->id,
