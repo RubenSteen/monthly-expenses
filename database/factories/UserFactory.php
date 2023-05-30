@@ -39,6 +39,18 @@ class UserFactory extends Factory
     }
 
     /**
+     * Indicate that the user should be a admin.
+     */
+    public function admin(): static
+    {
+        return $this->state(function () {
+            return [
+                'admin' => now(),
+            ];
+        });
+    }
+
+    /**
      * Indicate that the user should be a super admin.
      */
     public function superAdmin(): static

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IncomeController;
@@ -57,4 +58,8 @@ Route::middleware([
     Route::post('/piggy-bank', [PiggyBankController::class, 'store'])->name('piggy-bank.store');
     Route::put('/piggy-bank/{piggyBank}', [PiggyBankController::class, 'update'])->name('piggy-bank.update');
     Route::delete('/piggy-bank/{piggyBank}', [PiggyBankController::class, 'delete'])->name('piggy-bank.delete');
+
+    Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/user', [UserController::class, 'index'])->name('user.index');
+    });
 });
