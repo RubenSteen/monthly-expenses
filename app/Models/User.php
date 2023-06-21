@@ -23,37 +23,6 @@ class User extends Authenticatable implements MustVerifyEmail
     use TwoFactorAuthenticatable;
 
     /**
-     * The "booted" method of the model.
-     */
-    protected static function booted(): void
-    {
-        static::creating(function (User $user) {
-            $user->last_activity = now();
-        });
-
-        static::created(function (User $user) {
-            //Create some default categories
-            $data = [
-                ['name' => 'Uitgaven'],
-                ['name' => 'Gezamelijke uitgaven'],
-                ['name' => 'Sparen'],
-                ['name' => 'Gezamelijk sparen'],
-            ];
-
-            foreach ($data as $category) {
-                $user->category()->create($category);
-            }
-
-            //Create a default PiggyBank if the user does not have one.
-            if ($user->piggyBanks()->count() === 0) {
-                $user->piggyBanks()->create([
-                    'name' => 'Eigen rekening',
-                ]);
-            }
-        });
-    }
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
