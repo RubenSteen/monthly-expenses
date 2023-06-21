@@ -3,19 +3,18 @@
 namespace App\Providers;
 
 use App\Models\Category;
-use App\Models\User;
 use App\Models\Income;
 use App\Models\PiggyBank;
 use App\Models\Transaction;
-use App\Observers\UserObserver;
+use App\Models\User;
 use App\Observers\CategoryObserver;
 use App\Observers\IncomeObserver;
 use App\Observers\PiggyBankObserver;
 use App\Observers\TransactionObserver;
+use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
