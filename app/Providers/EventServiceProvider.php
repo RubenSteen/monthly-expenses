@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use App\Models\User;
 use App\Models\Income;
 use App\Models\PiggyBank;
 use App\Models\Transaction;
+use App\Observers\UserObserver;
 use App\Observers\CategoryObserver;
 use App\Observers\IncomeObserver;
 use App\Observers\PiggyBankObserver;
@@ -37,6 +39,7 @@ class EventServiceProvider extends ServiceProvider
         Income::observe(IncomeObserver::class);
         Category::observe(CategoryObserver::class);
         Transaction::observe(TransactionObserver::class);
+        User::observe(UserObserver::class);
     }
 
     /**
