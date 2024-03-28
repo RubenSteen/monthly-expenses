@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Jobs\CalculateTransactionTotalAmount;
 use App\Models\User;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,13 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([
-            TestUserSeeder::class,
-        ]);
+        // User::factory(10)->create();
 
-        // Correcting the income and transaction data once all users, income and transactions are created
-        foreach (User::all() as $user) {
-            CalculateTransactionTotalAmount::dispatch($user->income);
-        }
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
     }
 }
